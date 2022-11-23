@@ -11,35 +11,56 @@ export default function Edit({ navigation, route: { params } }) {
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', (e) => {
-            if (!hasUnsavedChanges) {
-              return;
-            }
-            e.preventDefault();
-            Alert.alert(
-              'Discard changes?',
-              'You have unsaved changes. Are you sure to discard them and leave the screen?',
-              [
-                { text: "Don't leave", style: 'cancel', onPress: () => {} },
-                {
-                  text: 'Discard',
-                  style: 'destructive',
-                  // If the user confirmed, then we dispatch the action we blocked earlier
-                  // This will continue the action that had triggered the removal of the screen
-                  onPress: () => navigation.dispatch(e.data.action),
-                },
-              ]
-            );
-        })
+        // navigation.addListener('beforeRemove', (e) => {
+        //     if (!hasUnsavedChanges) {
+        //       return;
+        //     }
+        //     e.preventDefault();
+        //     Alert.alert(
+        //       'Discard changes?',
+        //       'You have unsaved changes. Are you sure to discard them and leave the screen?',
+        //       [
+        //         { text: "Don't leave", style: 'cancel', onPress: () => {} },
+        //         {
+        //           text: 'Discard',
+        //           style: 'destructive',
+        //           // If the user confirmed, then we dispatch the action we blocked earlier
+        //           // This will continue the action that had triggered the removal of the screen
+        //           onPress: () => navigation.dispatch(e.data.action),
+        //         },
+        //       ]
+        //     );
+        // })
         
-        if (!isFocused) {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'List' }],
-            })
-        }
+        // if (!isFocused) {
+        //     navigation.reset({
+        //         index: 0,
+        //         routes: [{ name: 'List' }],
+        //     })
+        // }
 
     }, [navigation, isFocused, hasUnsavedChanges])
+
+    const check = (back) => {
+        if (!hasUnsavedChanges) {
+            return;
+        }
+        Alert.alert(
+            'Discard changes?',
+            'You have unsaved changes. Are you sure to discard them and leave the screen?',
+            [
+                { text: "Don't leave", style: 'cancel', onPress: () => { } },
+                {
+                    text: 'Discard',
+                    style: 'destructive',
+                    onPress: () => {
+                        setPantryCopy(pantry);
+                        back();
+                    },
+                },
+            ]
+        );
+    }
 
     useEffect(() => {
         navigation.getParent()?.setOptions({ tabBarStyle: { display: "none" }});
@@ -96,7 +117,7 @@ export default function Edit({ navigation, route: { params } }) {
     })
     return (
         <ScrollView style={styles.scrollView}>
-            <Header heading={"Pantry"} subHeading={'Update Items'} back={() => navigation.goBack()} />
+            <Header heading={"Pantry"} subHeading={'Update Items'} back={() => check(() => navigation.goBack())} />
             <View style={{ flex: 2.5, margin: 19, alignItems: 'center' }}>
                 {items}
                 <Pressable style={styles.addMore} onPress={() => navigation.navigate(() => { })}>
@@ -104,7 +125,10 @@ export default function Edit({ navigation, route: { params } }) {
                 </Pressable>
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 80, marginBottom: 80 }}>
-                <Pressable style={styles.submit} onPress={() => navigation.navigate(() => {})}>
+                <Pressable style={styles.submit} onPress={() => {
+                    setPantry(pantryCopy);
+                    navigation.navigate('List');
+                }}>
                     <Text style={styles.submitText}>Submit</Text>
                 </Pressable>
                 <Pressable style={styles.button} onPress={() => navigation.navigate(() => {})}>

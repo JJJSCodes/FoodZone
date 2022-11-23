@@ -1,6 +1,6 @@
 import { Text, View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons, Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Header({ heading, subHeading, back }) {

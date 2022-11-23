@@ -1,11 +1,12 @@
 import { Text, View, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign, Feather } from '@expo/vector-icons'; 
 import Header from '../Header'
 import defaultPantry from './defaultPantry';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 export default function List({ navigation }) {
     const [pantry, setPantry] = useState(defaultPantry);
+    const scrollViewRef = useRef();
     const items = pantry.map((item) => {
         return (
             <View style={styles.item}>
@@ -27,9 +28,14 @@ export default function List({ navigation }) {
     })
 
     return (
-        <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView}
+            ref={scrollViewRef}
+            onContentSizeChange={scrollViewRef.current?.scrollToEnd({animated: true})}>
             <Header heading={"Pantry"} subHeading={'Inventory'} />
             <View style={{ flex: 2.5, margin: 19 }}>
+                <Pressable style={styles.scrollButton} onPress={() => scrollViewRef.current?.scrollToEnd({animated: true})}>
+                    <Feather name="chevrons-down" size={40} color="white" />
+                </Pressable>
                 {items}
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'flex-end', marginBottom: 80 }}>
@@ -42,6 +48,12 @@ export default function List({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    scrollButton: {
+        width: 40,
+        top: '-15%',
+        right: 0,
+        position: 'absolute',
+    },
     button: {
         position: 'absolute',
         right: 19,
