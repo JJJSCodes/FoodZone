@@ -50,7 +50,7 @@ export default function List({ navigation }) {
 const styles = StyleSheet.create({
     scrollButton: {
         width: 40,
-        top: '-15%',
+        top: -90,
         right: 0,
         position: 'absolute',
     },
