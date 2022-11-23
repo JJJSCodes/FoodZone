@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
-import { Header } from './index'
+import Header from './Header'
 
 export default function Schedule() {
     const subHeading = 'Dec 13th - Dec 15th';

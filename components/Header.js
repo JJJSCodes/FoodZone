@@ -10,10 +10,12 @@ export default function Header({ heading, subHeading, back }) {
                 colors={['#F3752B', '#000000']}
                 style={styles.gradient}
             >
-                <SafeAreaView>
-                    {back && <TouchableOpacity style={styles.button} onPress={() => console.log('bai')}>
-                        <Ionicons name='arrow-back' size={35} color='white' />
-                    </TouchableOpacity>}
+                <SafeAreaView style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'flex-end' }}>
+                    <View style={{ bottom: '70%', marginTop: 20 }}>
+                        {back && <TouchableOpacity style={styles.button} onPress={() => back()}>
+                            <Ionicons name='arrow-back' size={35} color='white' />
+                            </TouchableOpacity>}
+                    </View>
                     <View style={styles.text}>
                         <Text style={styles.screenHeading}>{heading}</Text>
                         <Text style={styles.screenSubHeading}>{subHeading}</Text>
@@ -28,14 +30,14 @@ const styles = StyleSheet.create({
     gradient: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'flex-end',
     },
     text: {
+        position: 'absolute',
+        bottom: 0,
         alignItems: 'flex-start',
-        top: '50%',
         flexDirection: 'column',
         marginLeft: 19,
-        marginBottom: 20,
+        marginBottom: 27,
     },
     button: {
         width: 35,

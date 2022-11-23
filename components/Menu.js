@@ -2,7 +2,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { Home, Pantry, Schedule, Profile, Learning } from './index';
+import Home from './Home';
+import Pantry from './Pantry';
+import Schedule from './Schedule';
+import Profile from './Profile';
+import Learning from './Learning';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +21,7 @@ export default function Menu() {
                 }}
                 screenOptions={({ route }) => ({
                     headerShown: false,
-                    tabBarStyle: { height: 85, marginLeft: 10, marginRight: 10 },
+                    tabBarStyle: { minHeight: 85, marginLeft: 10, marginRight: 10 },
                     tabBarIcon: ({ focused }) => {
                         let iconName;
 
@@ -38,7 +42,7 @@ export default function Menu() {
                     }
                     })}>
                 <Tab.Screen name="Home" component={Home} />
-                <Tab.Screen name="Pantry" component={Pantry} />
+                <Tab.Screen name="Pantry" component={Pantry}/>
                 <Tab.Screen name="Schedule" component={Schedule} />
                 <Tab.Screen name="Profile" component={Profile} listeners={{
                     tabPress: (e) => {

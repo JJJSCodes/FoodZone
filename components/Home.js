@@ -1,12 +1,9 @@
 import { Text, View, Image, StyleSheet, ScrollView, SafeAreaView, Pressable, navigation } from 'react-native';
-import { Header } from './index';
+import Header from './Header';
 
 export default function Home() {
     return (
         <View style={styles.screenContainer}>
-            {/* <Header heading='Good Morning' subHeading='Jasmine' back={true} />
-            <View style={{ flex: 2.5 }} /> */}
-
             <ScrollView style={styles.scrollView}>
                 <Header heading='Good Morning' subHeading='Jasmine' />
                 <View style={styles.container}>
@@ -104,6 +101,9 @@ const styles = StyleSheet.create({
     },
 
     cookButton: {
+        position: 'fixed',
+        left: '35%',
+        bottom: '0%',
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#F3752B',
