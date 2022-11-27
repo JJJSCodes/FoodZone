@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     container: {
+        alignItems: 'flex-start',
         margin: 20,
     },
     heading: {
@@ -101,9 +102,8 @@ const styles = StyleSheet.create({
     },
 
     cookButton: {
-        position: 'fixed',
+        position: 'relative',
         left: '35%',
-        bottom: '0%',
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#F3752B',
