@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     },
     heading: {
         fontWeight: '700',
-        fontSize: '20',
+        fontSize: 20,
     },
 
     dishImage: {
