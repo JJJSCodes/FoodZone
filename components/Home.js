@@ -5,7 +5,7 @@ export default function Home() {
     return (
         <View style={styles.screenContainer}>
             <ScrollView style={styles.scrollView}>
-                <Header heading='Good Morning' subHeading='Jasmine' />
+                <Header heading='Good Morning' subHeading='Jasmine' isHome />
                 <View style={styles.container}>
                     <Text style={styles.heading}>Today's Meals</Text>
                     <View style={styles.meal}>
@@ -48,9 +48,9 @@ export default function Home() {
 
                 {/* <Pressable onPress={navigation.navigate('Pantry') }> */}
 
-                <View style={styles.cookButton}>
+                <Pressable style={styles.cookButton} onPress={() => console.log('here')}>
                     <Text style={styles.cookButtonText}>Cook Now</Text>
-                </View>
+                </Pressable>
             </ScrollView>
         </View>
     )

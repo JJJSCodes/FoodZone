@@ -3,22 +3,22 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Header({ heading, subHeading, back }) {
+export default function Header({ heading, subHeading, back, isHome }) {
     return (
         <View style={styles.screenContainer}>
             <LinearGradient
                 colors={['#F3752B', '#000000']}
                 style={styles.gradient}
             >
-                <SafeAreaView style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'flex-end' }}>
-                    <View style={{ bottom: '70%', marginTop: 20 }}>
+                <SafeAreaView style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, alignItems: isHome ? 'flex-start' : 'center', justifyContent: 'flex-end' }}>
                         {back && <TouchableOpacity style={styles.button} onPress={() => back()}>
                             <Ionicons name='arrow-back' size={35} color='white' />
-                            </TouchableOpacity>}
-                    </View>
-                    <View style={styles.text}>
-                        <Text style={styles.screenHeading}>{heading}</Text>
-                        <Text style={styles.screenSubHeading}>{subHeading}</Text>
+                        </TouchableOpacity>}
+                        <View style={{ marginHorizontal: 24, textAlign: isHome ? 'left' : 'center', flexDirection: 'column' }}>
+                            <Text style={{ ...styles.screenHeading, textAlign: isHome ? 'left' : 'center' }}>{heading}</Text>
+                            <Text style={{ ...styles.screenSubHeading, textAlign :isHome ? 'left' : 'center' }}>{subHeading}</Text>
+                        </View>
                     </View>
                 </SafeAreaView>
             </LinearGradient>
@@ -29,17 +29,10 @@ export default function Header({ heading, subHeading, back }) {
 const styles = StyleSheet.create({
     gradient: {
         flex: 1,
-        flexDirection: 'column',
-    },
-    text: {
-        position: 'absolute',
-        bottom: 0,
-        alignItems: 'flex-start',
-        flexDirection: 'column',
-        marginLeft: 19,
-        marginBottom: 27,
     },
     button: {
+        position: 'absolute',
+        left: 0,
         width: 35,
         marginLeft: 28,
     },
@@ -51,13 +44,11 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '700',
         color: 'white',
-        textAlign: 'center',
     },
     screenSubHeading: {
         fontSize: 15,
         fontWeight: '400',
         marginTop: 4,
         color: 'white',
-        textAlign: 'center',
     },
   });

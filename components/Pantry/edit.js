@@ -5,7 +5,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 
 export default function Edit({ navigation, route: { params } }) {
-    const { setPantry, pantry } = params;
+    const { setPantry, pantry, setShowModal } = params;
     const isFocused = useIsFocused();
     const [pantryCopy, setPantryCopy] = useState(pantry);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -42,7 +42,9 @@ export default function Edit({ navigation, route: { params } }) {
     }, [navigation, isFocused, hasUnsavedChanges])
 
     const check = (back) => {
+        console.log(hasUnsavedChanges)
         if (!hasUnsavedChanges) {
+            back();
             return;
         }
         Alert.alert(
@@ -89,6 +91,11 @@ export default function Edit({ navigation, route: { params } }) {
         copy[idx] = item;
         setPantryCopy(copy);
     }
+    
+    const format = (amount) => {
+        if (amount > 9) return amount.toString();
+        return '0' + amount.toString();
+    }
 
     const items = pantryCopy.map((item, idx) => {
         return (
@@ -104,10 +111,10 @@ export default function Edit({ navigation, route: { params } }) {
                     </View>
                 </View>
                 <View style={styles.right}>
-                    <Pressable style={styles.amountButtonLeft} onPress={() => subtract(idx)}>
+                    {item.amount > 0 ? <Pressable style={styles.amountButtonLeft} onPress={() => subtract(idx)}>
                         {item.amount == 1 ? <MaterialCommunityIcons name="trash-can-outline" color="black" size={18} /> : <AntDesign name="minus" size={18} color= "black" />}
-                    </Pressable>
-                    <Text style={styles.amount}>{item.amount}</Text>
+                    </Pressable> : <View style={{ ...styles.amountButtonLeft, backgroundColor: 'transparent' }} />}
+                    <Text style={styles.amount}>{format(item.amount)}</Text>
                     <Pressable style={styles.amountButtonRight} onPress={() => add(idx)}>
                         <AntDesign name="plus" size={18} color= "black" />
                     </Pressable>
@@ -127,6 +134,7 @@ export default function Edit({ navigation, route: { params } }) {
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 80, marginBottom: 80 }}>
                 <Pressable style={styles.submit} onPress={() => {
                     setPantry(pantryCopy);
+                    setShowModal(true);
                     navigation.navigate('List');
                 }}>
                     <Text style={styles.submitText}>Submit</Text>
@@ -185,6 +193,7 @@ const styles = StyleSheet.create({
         width: 100,
     },
     amountButtonLeft: {
+        flex: 0.33,
         padding: 7,
         alignItems: 'center',
         justifyContent: 'center',
@@ -192,6 +201,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#C3C6C9',
     },
     amountButtonRight: {
+        flex: 0.33,
         padding: 7,
         alignItems: 'center',
         justifyContent: 'center',
@@ -215,6 +225,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     amount: {
+        flex: 1,
+        textAlign: 'center',
         color: '#C3C6C9',
         fontSize: 20,
     },
