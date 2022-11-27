@@ -14,14 +14,14 @@ export default function Menu() {
     return (
         <NavigationContainer>
             <Tab.Navigator
-                tabBarOptions={{
-                    labelStyle: { fontSize: 14 },
-                    activeTintColor: styles.selected,
-                    inactiveTintColor: styles.default,
-                }}
                 screenOptions={({ route }) => ({
+                    tabBarActiveTintColor: styles.selected,
+                    tabBarInactiveTintColor: styles.default,
+                    tabBarLabelStyle: {
+                        fontSize: 14,
+                    },
                     headerShown: false,
-                    tabBarStyle: { minHeight: 85, marginLeft: 10, marginRight: 10 },
+                    tabBarStyle: { alignItems: 'center', justifyContent: 'center',  marginBottom: 10, marginHorizontal: 10 },
                     tabBarIcon: ({ focused }) => {
                         let iconName;
 

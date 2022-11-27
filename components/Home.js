@@ -56,7 +56,7 @@ export default function Home() {
     )
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ 
     screenContainer: {
         flex: 1,
     },
@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
     },
 
     cookButton: {
-        position: 'relative',
         left: '35%',
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#F3752B',
         width: 124,
         height: 48,
-        borderRadius: 10
+        borderRadius: 10,
+        marginBottom: 100,
     },
 
     cookButtonText: {

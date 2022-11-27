@@ -8,28 +8,23 @@ export default function Header({ heading, subHeading, back, isHome }) {
         <View style={styles.screenContainer}>
             <LinearGradient
                 colors={['#F3752B', '#000000']}
-                style={styles.gradient}
+                style={{ flex: 1 }}
             >
-                <SafeAreaView style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={{ flex: 1, alignItems: isHome ? 'flex-start' : 'center', justifyContent: 'flex-end' }}>
-                        {back && <TouchableOpacity style={styles.button} onPress={() => back()}>
-                            <Ionicons name='arrow-back' size={35} color='white' />
-                        </TouchableOpacity>}
-                        <View style={{ marginHorizontal: 24, textAlign: isHome ? 'left' : 'center', flexDirection: 'column' }}>
-                            <Text style={{ ...styles.screenHeading, textAlign: isHome ? 'left' : 'center' }}>{heading}</Text>
-                            <Text style={{ ...styles.screenSubHeading, textAlign :isHome ? 'left' : 'center' }}>{subHeading}</Text>
-                        </View>
+                <View style={{ flex: 1, margin: 24, alignItems: isHome ? 'flex-start' : 'center', justifyContent: 'flex-end' }}>
+                    {back && <TouchableOpacity style={styles.button} onPress={() => back()}>
+                        <Ionicons name='arrow-back' size={35} color='white' />
+                    </TouchableOpacity>}
+                    <View style={{ textAlign: isHome ? 'left' : 'center', flexDirection: 'column' }}>
+                        <Text style={{ ...styles.screenHeading, textAlign: isHome ? 'left' : 'center' }}>{heading}</Text>
+                        <Text style={{ ...styles.screenSubHeading, textAlign :isHome ? 'left' : 'center' }}>{subHeading}</Text>
                     </View>
-                </SafeAreaView>
+                </View>
             </LinearGradient>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    gradient: {
-        flex: 1,
-    },
     button: {
         position: 'absolute',
         left: 0,
@@ -38,7 +33,7 @@ const styles = StyleSheet.create({
     },
     screenContainer: {
         flex: 1,
-        minHeight: 230,
+        minHeight: 150,
     },
     screenHeading: {
         fontSize: 22,
