@@ -21,7 +21,6 @@ export default function Menu() {
                         fontSize: 14,
                     },
                     headerShown: false,
-                    tabBarStyle: { alignItems: 'center', justifyContent: 'center',  marginBottom: 10, marginHorizontal: 10 },
                     tabBarIcon: ({ focused }) => {
                         let iconName;
 
