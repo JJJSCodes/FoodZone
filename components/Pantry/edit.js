@@ -1,48 +1,22 @@
-import { Text, View, StyleSheet, Image, Alert, Button, ScrollView, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Image, Alert, TextInput, Modal, ScrollView, Pressable } from 'react-native';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'; 
 import Header from '../Header';
 import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
+import { EmptyItem } from './defaultPantry';
 
 export default function Edit({ navigation, route: { params } }) {
     const { setPantry, pantry, setShowModal } = params;
-    const isFocused = useIsFocused();
+    // const isFocused = useIsFocused();
+    // const [showAddMore, setShowAddMore] = useState(false);
     const [pantryCopy, setPantryCopy] = useState(pantry);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
-    useEffect(() => {
-        // navigation.addListener('beforeRemove', (e) => {
-        //     if (!hasUnsavedChanges) {
-        //       return;
-        //     }
-        //     e.preventDefault();
-        //     Alert.alert(
-        //       'Discard changes?',
-        //       'You have unsaved changes. Are you sure to discard them and leave the screen?',
-        //       [
-        //         { text: "Don't leave", style: 'cancel', onPress: () => {} },
-        //         {
-        //           text: 'Discard',
-        //           style: 'destructive',
-        //           // If the user confirmed, then we dispatch the action we blocked earlier
-        //           // This will continue the action that had triggered the removal of the screen
-        //           onPress: () => navigation.dispatch(e.data.action),
-        //         },
-        //       ]
-        //     );
-        // })
-        
-        // if (!isFocused) {
-        //     navigation.reset({
-        //         index: 0,
-        //         routes: [{ name: 'List' }],
-        //     })
-        // }
+    // useEffect(() => {
 
-    }, [navigation, isFocused, hasUnsavedChanges])
+    // }, [navigation, isFocused, hasUnsavedChanges])
 
     const check = (back) => {
-        console.log(hasUnsavedChanges)
         if (!hasUnsavedChanges) {
             back();
             return;
@@ -98,16 +72,60 @@ export default function Edit({ navigation, route: { params } }) {
     }
 
     const items = pantryCopy.map((item, idx) => {
+        var isCount = item.unit_measure === 'count';
+        var isWeight = item.unit_measure === 'lbs';
         return (
-            <View style={styles.item}>
-                <View style={styles.left}>
+            <View style={{ ...styles.item } }>
+                <View style={{ ...styles.left }}>
                     <Image
-                        style={styles.img}
+                        style={{ ...styles.img }}
                         source={item.img}
                     />
-                    <View style={{ marginHorizontal: 10 }}>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.unit_measure}>{item.unit_measure}</Text>
+                    <View style={{ marginHorizontal: 10, flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+                    <TextInput
+                        value={item.name}
+                        style={{ ...styles.name }}
+                        multiline={true}
+                            onChangeText={text => {
+                            setHasUnsavedChanges(true);
+                            var copy = [...pantryCopy];
+                            copy[idx].name = text;
+                            setPantryCopy(copy);
+                        }}
+                        />
+                        {/* <View style={{ zIndex: 1000 }} >
+                            <SelectList 
+                            // setSelected={(val) => setSelected(val)} 
+                            data={dropdownChoices} 
+                            save="value"
+                            placeholder={item.unit_measure}
+                            inputStyles={{ ...styles.unit_measure }}
+                            search={false}
+                            dropdownStyles={{ flex: 1, position: 'absolute', zIndex: 1, top: 15, width: 100, background: 'white' }}
+                            dropdownItemStyles={{ flex: 1, width: 100, overflow: 'wrap', paddingHorizontal: 10, paddingVertical: 5 }}
+                            boxStyles={{ position: 'fixed', justifyContent: 'flex-start', borderRadius: 0, borderWidth: 0, paddingHorizontal: 0, paddingVertical: 0 }}
+                            />
+                        </View> */}
+                        <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <Pressable onPress={() => {
+                                setHasUnsavedChanges(true);
+                                var copy = [...pantryCopy];
+                                copy[idx].unit_measure = 'count';
+                                setPantryCopy(copy);
+                            }}>
+                                <Text style={{ ...styles.unit_measure, fontWeight: isCount ? 'bold' : 'normal' }}>Count</Text>
+                            </Pressable>
+                            <Text style={{ ...styles.unit_measure, textDecorationLine: 'none' }}> / </Text>
+                            <Pressable
+                            onPress={() => {
+                                setHasUnsavedChanges(true);
+                                var copy = [...pantryCopy];
+                                copy[idx].unit_measure = 'lbs';
+                                setPantryCopy(copy);
+                            }}>
+                            <Text style={{ ...styles.unit_measure, fontWeight: isWeight ? 'bold' : 'normal' }}>Weight (lbs)</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.right}>
@@ -123,36 +141,48 @@ export default function Edit({ navigation, route: { params } }) {
         )
     })
     return (
-        <ScrollView style={styles.scrollView}>
-            <Header heading={"Pantry"} subHeading={'Update Items'} back={() => check(() => navigation.goBack())} />
-            <View style={{ flex: 2.5, margin: 19, alignItems: 'center' }}>
-                {items}
-                <Pressable style={styles.addMore} onPress={() => navigation.navigate(() => { })}>
-                    <Text style={styles.addMoreText}>Add More</Text>
-                </Pressable>
-            </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 80, marginBottom: 80 }}>
-                <Pressable style={styles.submit} onPress={() => {
-                    setPantry(pantryCopy);
-                    setShowModal(true);
-                    navigation.navigate('List');
-                }}>
-                    <Text style={styles.submitText}>Submit</Text>
-                </Pressable>
-                <Pressable style={styles.button} onPress={() => navigation.navigate(() => {})}>
-                    <MaterialCommunityIcons name="camera-plus-outline" size={50} color="white" />
-                </Pressable>
-            </View>
-        </ScrollView>
+            <ScrollView style={styles.scrollView}>
+                <Header heading={"Pantry"} subHeading={'Update Items'} back={() => check(() => navigation.goBack())} />
+                <View style={{ flex: 2.5, margin: 19, alignItems: 'center' }}>
+                    {items}
+                </View>
+                <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 80 }}>
+                    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Pressable style={styles.addMore} onPress={() => {}}>
+                            <Text style={styles.addMoreText}>Add More</Text>
+                        </Pressable>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate(() => {})}>
+                            <MaterialCommunityIcons name="camera-plus-outline" size={50} color="white" />
+                        </Pressable>
+                    </View>
+                    <Pressable style={styles.submit} onPress={() => {
+                        var copy = [...pantryCopy];
+                        copy.forEach((item) => {
+                            if (item.name === "") {
+                                item.name = "Enter Item Name";
+                            }
+                        })
+                        setPantry(copy);
+                        setShowModal(true);
+                        navigation.navigate('List');
+                    }}>
+                        <Text style={styles.submitText}>Submit</Text>
+                    </Pressable>
+                </View>
+            </ScrollView>
     )
 }
 const styles = StyleSheet.create({
+    scrollView: {
+        flexDirection: 'column'
+    },  
     addMoreText: {
         color: '#F3752B',
         fontSize: 17,
         fontWeight: '600',
     },
     addMore: {
+        marginLeft: 44,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
@@ -168,9 +198,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F3752B',
         width: 123,
         height: 48,
+        marginTop: 40,
         borderRadius: 10,
-        position: 'absolute',
-        left: 28,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -182,15 +211,16 @@ const styles = StyleSheet.create({
     button: {
         width: 80,
         height: 80,
+        marginRight: 44,
         borderRadius: 66,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F3752B',
-        position: 'absolute',
-        right: 26,
     },
     img: {
         width: 100,
+        height: 100,
+        borderRadius: 16,
     },
     amountButtonLeft: {
         flex: 0.33,
@@ -232,9 +262,11 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 17,
+        maxWidth: 125,
     },
     unit_measure: {
         color: '#8E8E93',
         fontSize: 15,
+        textDecorationLine: 'underline',
     },
 });

@@ -1,5 +1,5 @@
-import { Text, View, StyleSheet, ScrollView, TouchableHighlight, Alert, Pressable, Modal, Image } from 'react-native';
-import { AntDesign, Feather } from '@expo/vector-icons'; 
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Alert, Pressable, Modal, Image } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import Header from '../Header'
 import defaultPantry from './defaultPantry';
 import { useState, useRef } from 'react';
@@ -9,21 +9,35 @@ export default function List({ navigation }) {
     const [showModal, setShowModal] = useState(false);
     const scrollViewRef = useRef();
 
+    const format = (amount) => {
+        if (amount > 9) return amount.toString();
+        return '0' + amount.toString();
+    }
+
+    const unitType = (type) => {
+        switch (type) {
+            case 'count':
+                return 'Count'
+            case 'lbs':
+                return 'Weight (lbs)'
+        }
+    } 
+
     const items = pantry.map((item) => {
         return (
             <View style={styles.item}>
-                <View style={styles.left}>
+                <View style={{ ...styles.left}}>
                     <Image
                         style={styles.img}
                         source={item.img}
                     />
                     <View style={{ marginHorizontal: 10 }}>
                     <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.unit_measure}>{item.unit_measure}</Text>
+                    <Text style={styles.unit_measure}>{unitType(item.unit_measure)}</Text>
                     </View>
                 </View>
                 <View style={styles.right}>
-                    <Text style={styles.amount}>{item.amount}</Text>
+                    <Text style={styles.amount}>{format(item.amount)}</Text>
                 </View>
             </View>
         )
@@ -41,11 +55,11 @@ export default function List({ navigation }) {
                   Alert.alert("Modal has been closed.");
                   setShowModal(!showModal);
                 }}
-              >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Pantry Updated Successfully!</Text>
-                        <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
+            >
+                <TouchableOpacity style={styles.centeredView} onPressOut={() => setShowModal(false)}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Pantry Updated Successfully!</Text>
+                            <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
                             <Pressable style={styles.homeButton} onPress={() => {
                                 setShowModal(false);
                                 navigation.navigate('Home')
@@ -57,7 +71,7 @@ export default function List({ navigation }) {
                             </Pressable>
                         </View>
                     </View>
-            </View>
+                 </TouchableOpacity>
               </Modal>
             <Header heading={"Pantry"} subHeading={'Inventory'} back={() => navigation.navigate('Home')} />
             <View style={{ flex: 2.5, margin: 19 }}>
@@ -68,7 +82,7 @@ export default function List({ navigation }) {
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'flex-end', marginBottom: 80 }}>
                 <Pressable style={styles.button} onPress={() => navigation.navigate('Edit', { setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool), pantry: pantry })}>
-                    <AntDesign name="pluscircle" size={80} color="#F3752B" />
+                    <MaterialCommunityIcons name="pencil-circle" size={80} color="#F3752B" />
                 </Pressable>
             </View>
         </ScrollView>
@@ -171,6 +185,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 17,
+        maxWidth: 125,
     },
     unit_measure: {
         color: '#8E8E93',
