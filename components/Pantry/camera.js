@@ -29,9 +29,10 @@ export default function CameraScan({navigation, route}) {
    
   }
 
+
   return (
     <View style={styles.container}>
-      <Header heading={"Pantry"} subHeading={'Camera'} back={() => check(() => navigation.goBack())} />
+      
       <Camera style={styles.camera} type={type}>
         <View style={styles.buttonContainer}>
             {/* change toggleCameraType to navigation */}

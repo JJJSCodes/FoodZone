@@ -19,7 +19,7 @@ const Scan_Pantry = [
     },
 ]
 
-export default function CameraScan({navigation, route}) {
+export default function CamReview({navigation, route}) {
     <Text>This is review</Text>
 }
 
