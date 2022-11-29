@@ -4,6 +4,7 @@ import Header from '../Header';
 import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { EmptyItem } from './defaultPantry';
+import CameraScan from './camera';
 
 export default function Edit({ navigation, route: { params } }) {
     const { setPantry, pantry, setShowModal } = params;
@@ -151,7 +152,7 @@ export default function Edit({ navigation, route: { params } }) {
                         <Pressable style={styles.addMore} onPress={() => {}}>
                             <Text style={styles.addMoreText}>Add More</Text>
                         </Pressable>
-                        <Pressable style={styles.button} onPress={() => navigation.navigate(() => {})}>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate("CameraScan")}>
                             <MaterialCommunityIcons name="camera-plus-outline" size={50} color="white" />
                         </Pressable>
                     </View>
