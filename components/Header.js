@@ -10,7 +10,7 @@ export default function Header({ heading, subHeading, back, isHome }) {
                 colors={['#F3752B', '#000000']}
                 style={{ flex: 1 }}
             >
-                <View style={{ flex: 1, margin: 24, alignItems: isHome ? 'flex-start' : 'center', justifyContent: 'flex-end' }}>
+                <View style={{ flex: 1, marginVertical: 24, marginHorizontal: 24, alignItems: isHome ? 'flex-start' : 'center', justifyContent: 'flex-end' }}>
                     {back && <TouchableOpacity style={styles.button} onPress={() => back()}>
                         <Ionicons name='arrow-back' size={35} color='white' />
                     </TouchableOpacity>}

@@ -33,7 +33,7 @@ const Pantry = [
 
 const EmptyItem = {
     img: require('../../assets/pantry/groceries.png'),
-    name: 'Enter Item Name',
+    name: '',
     unit_measure: 'count',
     amount: 0,
 }

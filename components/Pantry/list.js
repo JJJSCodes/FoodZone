@@ -3,10 +3,19 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from '../Header'
 import defaultPantry from './defaultPantry';
 import { useState, useRef } from 'react';
+import { useFonts, Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
+import { Roboto_500Medium } from '@expo-google-fonts/roboto';
 
-export default function List({ navigation }) {
-    const [pantry, setPantry] = useState(defaultPantry);
+export default function List({ navigation, route: { params } }) {
+    let [fontsLoaded] = useFonts({
+        Inter_400Regular,
+        Inter_500Medium,
+        Roboto_500Medium,
+      });
+
+    const [pantry, setPantry] = useState([...defaultPantry]);
     const [showModal, setShowModal] = useState(false);
+
     const scrollViewRef = useRef();
 
     const format = (amount) => {
@@ -23,26 +32,42 @@ export default function List({ navigation }) {
         }
     } 
 
-    const items = pantry.map((item) => {
+    const items = pantry.map((item, idx) => {
+        if (!item) return;
         return (
-            <View style={styles.item}>
+            <View style={styles.item} key={idx}>
                 <View style={{ ...styles.left}}>
                     <Image
                         style={styles.img}
                         source={item.img}
                     />
                     <View style={{ marginHorizontal: 10 }}>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.unit_measure}>{unitType(item.unit_measure)}</Text>
+                    <Text style={{ ...styles.name, fontFamily: 'Inter_400Regular' }}>{item.name}</Text>
+                    <Text style={{ ...styles.unit_measure, fontFamily: 'Inter_400Regular' }}>{unitType(item.unit_measure)}</Text>
                     </View>
                 </View>
                 <View style={styles.right}>
-                    <Text style={styles.amount}>{format(item.amount)}</Text>
+                    <Text style={{ ...styles.amount, fontFamily: 'Roboto_500Medium' }}>{format(item.amount)}</Text>
                 </View>
             </View>
         )
     })
 
+    var changes;
+    var appendedText;
+    if (params?.newItems) {
+        if (params.newItems == 0) {
+            changes = '';
+        } else if (params.newItems > 0 && params.increase) {
+            changes = params.newItems.toString();
+            appendedText = ' entries added';
+        } else {
+            changes = params.newItems.toString();
+            appendedText = ' entries removed';
+        }
+    }
+
+    if (!fontsLoaded) return;
     return (
         <ScrollView style={styles.scrollView}
             ref={scrollViewRef}
@@ -58,30 +83,34 @@ export default function List({ navigation }) {
             >
                 <TouchableOpacity style={styles.centeredView} onPressOut={() => setShowModal(false)}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Pantry Updated Successfully!</Text>
-                            <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
-                            <Pressable style={styles.homeButton} onPress={() => {
-                                setShowModal(false);
-                                navigation.navigate('Home')
-                            }}>
-                                <Text style={styles.homeButtonText}>Go Home</Text>
-                            </Pressable>
-                            <Pressable style={styles.pantryButton} onPress={() => setShowModal(false)}>
-                                <Text style={styles.pantryButtonText}>View Pantry</Text>
-                            </Pressable>
+                            <Text style={{ ...styles.modalText, marginTop: 9, fontFamily: 'Inter_500Medium' }}>Pantry Updated Successfully!</Text>
+                            {changes && appendedText && <View style={{ flexDirection: 'row', marginBottom: 32 }}>
+                                <Text style={{ ...styles.count, fontSize: 20, fontFamily: 'Inter_400Regular', textAlign: 'center' }}>{changes}</Text>
+                                <Text style={{ ...styles.unit_measure, fontSize: 20, fontFamily: 'Inter_400Regular', textAlign: 'center'}}>{appendedText}</Text>
+                            </View>}
+                            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+                                <Pressable style={styles.homeButton} onPress={() => {
+                                    setShowModal(false);
+                                    navigation.navigate('Home')
+                                }}>
+                                    <Text style={styles.homeButtonText}>Go Home</Text>
+                                </Pressable>
+                                <Pressable style={styles.pantryButton} onPress={() => setShowModal(false)}>
+                                    <Text style={styles.pantryButtonText}>View Pantry</Text>
+                                </Pressable>
+                            </View>
                         </View>
-                    </View>
                  </TouchableOpacity>
               </Modal>
             <Header heading={"Pantry"} subHeading={'Inventory'} back={() => navigation.navigate('Home')} />
-            <View style={{ flex: 2.5, margin: 19 }}>
+            <View style={{ flex: 2.5, marginHorizontal: 19, marginVertical: 24 }}>
                 {/* <Pressable style={styles.scrollButton} onPress={() => scrollViewRef.current?.scrollToEnd({animated: true})}>
                     <Feather name="chevrons-down" size={40} color="white" />
                 </Pressable> */}
                 {items}
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'flex-end', marginBottom: 80 }}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('Edit', { setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool), pantry: pantry })}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('Edit', { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
                     <MaterialCommunityIcons name="pencil-circle" size={80} color="#F3752B" />
                 </Pressable>
             </View>
@@ -97,7 +126,6 @@ const styles = StyleSheet.create({
         marginTop: 22
     },
     modalView: {
-        margin: 29,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 29,
@@ -114,13 +142,11 @@ const styles = StyleSheet.create({
     },
     modalText: {
         marginBottom: 23,
-        fontWeight: '600',
+        fontSize: 20,
         textAlign: "center",
         color: '#201A25',
     },
     pantryButton: {
-        position: 'relative',
-        left: '35%',
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#F3752B',
@@ -137,6 +163,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         maxWidth: 120,
         maxHeight: 48,
+        marginRight: 38,
         borderColor: '#F3752B',
         borderRadius: 10,
         paddingHorizontal: 20,
@@ -157,6 +184,9 @@ const styles = StyleSheet.create({
     button: {
         position: 'absolute',
         right: 19,
+    },
+    count: {
+        color: '#F3752B',
     },
     center: {
         flex: 1,

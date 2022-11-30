@@ -1,17 +1,20 @@
 import { Text, View, StyleSheet, Image, Alert, TextInput, Modal, ScrollView, Pressable } from 'react-native';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'; 
 import Header from '../Header';
-import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { EmptyItem } from './defaultPantry';
 import CameraScan from './camera';
+import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
+import { Roboto_500Medium } from '@expo-google-fonts/roboto';
 
 export default function Edit({ navigation, route: { params } }) {
-    const { setPantry, pantry, setShowModal } = params;
-    // const isFocused = useIsFocused();
-    // const [showAddMore, setShowAddMore] = useState(false);
-    const [pantryCopy, setPantryCopy] = useState(pantry);
+    const { pantry, setPantry, setShowModal } = params;
+    const [pantryCopy, setPantryCopy] = useState(JSON.parse(JSON.stringify(pantry)));
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+    let [fontsLoaded] = useFonts({
+        Inter_400Regular,
+        Roboto_500Medium,
+    });
 
     // useEffect(() => {
 
@@ -31,7 +34,6 @@ export default function Edit({ navigation, route: { params } }) {
                     text: 'Discard',
                     style: 'destructive',
                     onPress: () => {
-                        setPantryCopy(pantry);
                         back();
                     },
                 },
@@ -45,26 +47,29 @@ export default function Edit({ navigation, route: { params } }) {
       }, [navigation]);
 
     const subtract = (idx) => {
-        var item = pantryCopy[idx];
         var copy = [...pantryCopy];
-        setHasUnsavedChanges(true);
-        if (item.amount - 1 > 0) {
-            item.amount = item.amount - 1;
-            copy[idx] = item;
+        if (copy[idx].amount - 1 > 0) {
+            copy[idx].amount -= 1;
             setPantryCopy(copy);
         } else {
             copy.splice(idx, 1)
             setPantryCopy(copy);
         }
+        setHasUnsavedChanges(true);
     }
 
     const add = (idx) => {
-        var item = pantryCopy[idx];
         var copy = [...pantryCopy];
-        setHasUnsavedChanges(true);
-        item.amount = item.amount + 1;
-        copy[idx] = item;
+        copy[idx].amount += 1;
         setPantryCopy(copy);
+        setHasUnsavedChanges(true);
+    }
+
+    const addMore = () => {
+        var copy = [...pantryCopy];
+        copy.push({...EmptyItem});
+        setPantryCopy(copy);
+        setHasUnsavedChanges(true);
     }
     
     const format = (amount) => {
@@ -73,27 +78,38 @@ export default function Edit({ navigation, route: { params } }) {
     }
 
     const items = pantryCopy.map((item, idx) => {
+        if (!item) return;
         var isCount = item.unit_measure === 'count';
         var isWeight = item.unit_measure === 'lbs';
+        var textRef;
         return (
-            <View style={{ ...styles.item } }>
+            <View key={idx}  style={{ ...styles.item } }>
                 <View style={{ ...styles.left }}>
                     <Image
                         style={{ ...styles.img }}
                         source={item.img}
                     />
                     <View style={{ marginHorizontal: 10, flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
-                    <TextInput
-                        value={item.name}
-                        style={{ ...styles.name }}
-                        multiline={true}
-                            onChangeText={text => {
-                            setHasUnsavedChanges(true);
-                            var copy = [...pantryCopy];
-                            copy[idx].name = text;
-                            setPantryCopy(copy);
-                        }}
-                        />
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <TextInput
+                                ref={(input) => textRef = input}
+                                placeholder={'Enter Item Name'}
+                                value={item.name}
+                                style={{ ...styles.name, paddingRight: 20, justifyContent: 'center' }}
+                                multiline={true}
+                                    onChangeText={text => {
+                                        setHasUnsavedChanges(true);
+                                        var copy = [...pantryCopy];
+                                        copy[idx].name = text;
+                                        setPantryCopy(copy);
+                                    }}
+                            />
+                            <View style={{ left: -15, top: 2 }}>
+                                <Pressable onPress={() => { textRef.focus() }}>
+                                    <MaterialCommunityIcons name="pencil-circle" size={20} color="#F3752B" />
+                                </Pressable>
+                            </View>
+                        </View>
                         {/* <View style={{ zIndex: 1000 }} >
                             <SelectList 
                             // setSelected={(val) => setSelected(val)} 
@@ -130,9 +146,13 @@ export default function Edit({ navigation, route: { params } }) {
                     </View>
                 </View>
                 <View style={styles.right}>
-                    {item.amount > 0 ? <Pressable style={styles.amountButtonLeft} onPress={() => subtract(idx)}>
-                        {item.amount == 1 ? <MaterialCommunityIcons name="trash-can-outline" color="black" size={18} /> : <AntDesign name="minus" size={18} color= "black" />}
-                    </Pressable> : <View style={{ ...styles.amountButtonLeft, backgroundColor: 'transparent' }} />}
+                    {item.amount >= 0 ?
+                        <Pressable style={styles.amountButtonLeft} onPress={() => subtract(idx)}>
+                            {item.amount <= 1 ?
+                                <MaterialCommunityIcons name="trash-can-outline" color="black" size={18} /> :
+                                <AntDesign name="minus" size={18} color="black" />
+                            }
+                        </Pressable> : <View style={{ ...styles.amountButtonLeft, backgroundColor: 'transparent' }} />}
                     <Text style={styles.amount}>{format(item.amount)}</Text>
                     <Pressable style={styles.amountButtonRight} onPress={() => add(idx)}>
                         <AntDesign name="plus" size={18} color= "black" />
@@ -141,15 +161,18 @@ export default function Edit({ navigation, route: { params } }) {
             </View>
         )
     })
+
+    if (!fontsLoaded) return;
+
     return (
             <ScrollView style={styles.scrollView}>
-                <Header heading={"Pantry"} subHeading={'Update Items'} back={() => check(() => navigation.goBack())} />
+            <Header heading={"Pantry"} subHeading={'Update Items'} back={() => check(() => navigation.navigate('List'))} />
                 <View style={{ flex: 2.5, margin: 19, alignItems: 'center' }}>
                     {items}
                 </View>
                 <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 80 }}>
                     <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <Pressable style={styles.addMore} onPress={() => {}}>
+                        <Pressable style={styles.addMore} onPress={() => addMore()}>
                             <Text style={styles.addMoreText}>Add More</Text>
                         </Pressable>
                         <Pressable style={styles.button} onPress={() => navigation.navigate("CameraScan")}>
@@ -158,12 +181,13 @@ export default function Edit({ navigation, route: { params } }) {
                     </View>
                     <Pressable style={styles.submit} onPress={() => {
                         var copy = [...pantryCopy];
-                        copy.forEach((item) => {
+                        var newCopy = copy.filter((item) => item.amount > 0);
+                        newCopy.forEach((item) => {
                             if (item.name === "") {
                                 item.name = "Enter Item Name";
                             }
                         })
-                        setPantry(copy);
+                        setPantry(newCopy);
                         setShowModal(true);
                         navigation.navigate('List');
                     }}>
@@ -263,7 +287,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 17,
-        maxWidth: 125,
+        maxWidth: '90%',
     },
     unit_measure: {
         color: '#8E8E93',
