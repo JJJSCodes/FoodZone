@@ -1,11 +1,13 @@
 import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState, useRef } from 'react';
+import { ActivityIndicator, StyleSheet, Text, SafeAreaView, TouchableOpacity, View, RecyclerViewBackedScrollView } from 'react-native';
+import { Ionicons, Entypo } from '@expo/vector-icons'; 
 import Header from '../Header';
 
 export default function CameraScan({navigation, route}) {
-  const [type, setType] = useState(CameraType.back);
+  const [loading, setLoading] = useState(false);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const ref = useRef();
 
   if (!permission) {
     // Camera permissions are still loading
@@ -14,33 +16,38 @@ export default function CameraScan({navigation, route}) {
 
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet
     return (
-      <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
-      </View>
+      requestPermission()
     );
-  }
-
-  const __takePicture = async () => {
-    if (!Camera) return
-    const photo = await Camera.takePictureAsync()
-   
   }
 
 
   return (
     <View style={styles.container}>
-      
-      <Camera style={styles.camera} type={type}>
+      <Camera style={styles.camera} ref={ref}>
         <View style={styles.buttonContainer}>
-            {/* change toggleCameraType to navigation */}
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("CamReview")}>
-            <Text style={styles.text}>Review</Text>
-          </TouchableOpacity> 
+          {!loading && <TouchableOpacity style={styles.button} onPress={() => {
+            setLoading(true);
+            ref.current.pausePreview();
+            ref.current.takePictureAsync().then((uri) => {
+              setLoading(false);
+              navigation.navigate("CamReview", { uri: uri });
+            }).catch((err) => {
+              console.log(err)
+              setLoading(false);
+            }).finally(() => {
+              ref.current.resumePreview();
+              resolve();
+            })
+          }}>
+            <View style={{ width: 65, height: 65, borderWidth: 1, borderColor: 'black', borderRadius: 65/2 }} />
+          </TouchableOpacity>}
         </View>
       </Camera>
+      {loading && <ActivityIndicator style={{ position: 'absolute', alignSelf: 'center' }} size="large" color="black" />}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Ionicons name='arrow-back' size={35} color='white' />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -56,14 +63,20 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'transparent',
+    justifyContent: 'center',
     margin: 64,
   },
   button: {
-    flex: 1,
+    width: 75,
+    height: 75,
+    borderRadius: 22,
+    backgroundColor: 'white',
     alignSelf: 'flex-end',
+    borderRadius: 75 / 2,
+    borderColor: 'white',
     alignItems: 'center',
-    borderRadius: 5 
+    justifyContent: 'center',
+    borderWidth: 5,
   },
 
   text: {
@@ -72,5 +85,12 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: "orange",
     padding: 10
+  },
+  backButton: {
+    position: 'absolute',
+    left: 0,
+    top: '10%',
+    width: 35,
+    marginLeft: 28,
   },
 });

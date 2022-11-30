@@ -3,7 +3,6 @@ import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import Header from '../Header';
 import { useState, useEffect } from 'react';
 import { EmptyItem } from './defaultPantry';
-import CameraScan from './camera';
 import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 import { Roboto_500Medium } from '@expo-google-fonts/roboto';
 
