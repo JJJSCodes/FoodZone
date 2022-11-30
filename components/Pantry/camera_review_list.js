@@ -161,12 +161,10 @@ export default function CamReviewList({ navigation, route: { params } }) {
                 <View style={{ flex: 2.5, margin: 19, alignItems: 'center' }}>
                     {items}
                 </View>
-                <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 80 }}>
-                    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <Pressable style={styles.addMore} onPress={() => addMore()}>
-                            <Text style={styles.addMoreText}>Add More</Text>
-                        </Pressable>
-                    </View>
+                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 80}}>
+                    <Pressable style={styles.addMore} onPress={() => addMore()}>
+                        <Text style={styles.addMoreText}>Add More</Text>
+                    </Pressable>
                     <Pressable style={styles.submit} onPress={() => {
                         var copy = [...reviewList];
                         var newCopy = copy.filter((item) => item.amount > 0);
@@ -177,7 +175,7 @@ export default function CamReviewList({ navigation, route: { params } }) {
                         })
                         navigation.navigate('Edit', { ...params, concat: newCopy });
                     }}>
-                        <Text style={styles.submitText}>Submit</Text>
+                        <Text style={styles.submitText}>Save</Text>
                     </Pressable>
                 </View>
             </ScrollView>
@@ -194,7 +192,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     addMore: {
-        marginLeft: 44,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
@@ -205,12 +202,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 13,
         boxSizing: 'border-box',
+        marginRight: 44,
     },
     submit: {
         backgroundColor: '#F3752B',
         width: 123,
         height: 48,
-        marginTop: 40,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
