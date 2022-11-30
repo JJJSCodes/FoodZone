@@ -4,7 +4,7 @@ import { ActivityIndicator, StyleSheet, Text, SafeAreaView, TouchableOpacity, Vi
 import { Ionicons, Entypo } from '@expo/vector-icons'; 
 import Header from '../Header';
 
-export default function CameraScan({navigation, route}) {
+export default function CameraScan({ navigation, route: { params } }) {
   const [loading, setLoading] = useState(false);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const ref = useRef();
@@ -31,7 +31,7 @@ export default function CameraScan({navigation, route}) {
             ref.current.pausePreview();
             ref.current.takePictureAsync().then((uri) => {
               setLoading(false);
-              navigation.navigate("CamReview", { uri: uri });
+              navigation.navigate("CamReview", { uri: uri, ...params });
             }).catch((err) => {
               console.log(err)
               setLoading(false);

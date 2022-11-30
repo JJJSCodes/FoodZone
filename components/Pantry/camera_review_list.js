@@ -1,19 +1,64 @@
-import { Text, View, StyleSheet, Image, Alert, TextInput, Modal, ScrollView, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Alert, Image, TextInput, Pressable, ScrollView } from 'react-native';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'; 
+import { useState } from 'react';
 import Header from '../Header';
-import { useState, useEffect } from 'react';
-import { EmptyItem } from './defaultPantry';
 import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 import { Roboto_500Medium } from '@expo-google-fonts/roboto';
+import { EmptyItem } from './defaultPantry';
 
-export default function Edit({ navigation, route: { params } }) {
-    const { pantry, setPantry, setShowModal, concat = [] } = params;
-    const [pantryCopy, setPantryCopy] = useState(JSON.parse(JSON.stringify(pantry.concat(concat))));
-    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+const Scan_Pantry = [
+    {
+        img: require('../../assets/pantry/cheddar.png'),
+        name: 'Shredded Cheddar',
+        unit_measure: 'count',
+        amount: 2,
+    },
+    {
+        img: require('../../assets/pantry/milk.png'),
+        name: 'Skimmed Milk',
+        unit_measure: 'count',
+        amount: 1,
+    },
+]
+
+export default function CamReviewList({ navigation, route: { params } }) {
+    const [reviewList, setReviewList] = useState([...Scan_Pantry]);
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(true);
     let [fontsLoaded] = useFonts({
         Inter_400Regular,
         Roboto_500Medium,
     });
+
+    const subtract = (idx) => {
+        var copy = [...reviewList];
+        if (copy[idx].amount - 1 > 0) {
+            copy[idx].amount -= 1;
+            setReviewList(copy);
+        } else {
+            copy.splice(idx, 1)
+            setReviewList(copy);
+        }
+        setHasUnsavedChanges(true);
+    }
+
+    const add = (idx) => {
+        var copy = [...reviewList];
+        copy[idx].amount += 1;
+        setReviewList(copy);
+        setHasUnsavedChanges(true);
+    }
+
+    const addMore = () => {
+        var copy = [...reviewList];
+        copy.push({...EmptyItem});
+        setReviewList(copy);
+        setHasUnsavedChanges(true);
+    }
+    
+    const format = (amount) => {
+        if (amount > 9) return amount.toString();
+        return '0' + amount.toString();
+    }
 
     const check = (back) => {
         if (!hasUnsavedChanges) {
@@ -36,49 +81,7 @@ export default function Edit({ navigation, route: { params } }) {
         );
     }
 
-    useEffect(() => {
-        navigation.getParent()?.setOptions({ tabBarStyle: { display: "none" }});
-        return () => navigation.getParent()?.setOptions({ tabBarStyle: undefined });
-    }, [navigation]);
-    
-    useEffect(() => {
-        if (concat.length > 0) {
-            setPantryCopy([...pantryCopy].concat(concat));
-        }
-    }, [concat])
-
-    const subtract = (idx) => {
-        var copy = [...pantryCopy];
-        if (copy[idx].amount - 1 > 0) {
-            copy[idx].amount -= 1;
-            setPantryCopy(copy);
-        } else {
-            copy.splice(idx, 1)
-            setPantryCopy(copy);
-        }
-        setHasUnsavedChanges(true);
-    }
-
-    const add = (idx) => {
-        var copy = [...pantryCopy];
-        copy[idx].amount += 1;
-        setPantryCopy(copy);
-        setHasUnsavedChanges(true);
-    }
-
-    const addMore = () => {
-        var copy = [...pantryCopy];
-        copy.push({...EmptyItem});
-        setPantryCopy(copy);
-        setHasUnsavedChanges(true);
-    }
-    
-    const format = (amount) => {
-        if (amount > 9) return amount.toString();
-        return '0' + amount.toString();
-    }
-
-    const items = pantryCopy.map((item, idx) => {
+    const items = reviewList.map((item, idx) => {
         if (!item) return;
         var isCount = item.unit_measure === 'count';
         var isWeight = item.unit_measure === 'lbs';
@@ -100,9 +103,9 @@ export default function Edit({ navigation, route: { params } }) {
                                 multiline={true}
                                     onChangeText={text => {
                                         setHasUnsavedChanges(true);
-                                        var copy = [...pantryCopy];
+                                        var copy = [...reviewList];
                                         copy[idx].name = text;
-                                        setPantryCopy(copy);
+                                        setReviewList(copy);
                                     }}
                             />
                             <View style={{ left: -15, top: 2 }}>
@@ -114,9 +117,9 @@ export default function Edit({ navigation, route: { params } }) {
                         <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
                             <Pressable onPress={() => {
                                 setHasUnsavedChanges(true);
-                                var copy = [...pantryCopy];
+                                var copy = [...reviewList];
                                 copy[idx].unit_measure = 'count';
-                                setPantryCopy(copy);
+                                setReviewList(copy);
                             }}>
                                 <Text style={{ ...styles.unit_measure, fontWeight: isCount ? 'bold' : 'normal' }}>Count</Text>
                             </Pressable>
@@ -124,9 +127,9 @@ export default function Edit({ navigation, route: { params } }) {
                             <Pressable
                             onPress={() => {
                                 setHasUnsavedChanges(true);
-                                var copy = [...pantryCopy];
+                                var copy = [...reviewList];
                                 copy[idx].unit_measure = 'lbs';
-                                setPantryCopy(copy);
+                                setReviewList(copy);
                             }}>
                             <Text style={{ ...styles.unit_measure, fontWeight: isWeight ? 'bold' : 'normal' }}>Weight (lbs)</Text>
                             </Pressable>
@@ -154,7 +157,7 @@ export default function Edit({ navigation, route: { params } }) {
 
     return (
             <ScrollView style={styles.scrollView}>
-            <Header heading={"Pantry"} subHeading={'Update Items'} back={() => check(() => navigation.navigate('List'))} />
+            <Header heading={"Pantry"} subHeading={'Review Scanned Items'} back={() => check(() => navigation.navigate('CameraScan'))} />
                 <View style={{ flex: 2.5, margin: 19, alignItems: 'center' }}>
                     {items}
                 </View>
@@ -163,21 +166,16 @@ export default function Edit({ navigation, route: { params } }) {
                         <Pressable style={styles.addMore} onPress={() => addMore()}>
                             <Text style={styles.addMoreText}>Add More</Text>
                         </Pressable>
-                        <Pressable style={styles.button} onPress={() => navigation.navigate("CameraScan", params)}>
-                            <MaterialCommunityIcons name="camera-plus-outline" size={50} color="white" />
-                        </Pressable>
                     </View>
                     <Pressable style={styles.submit} onPress={() => {
-                        var copy = [...pantryCopy];
+                        var copy = [...reviewList];
                         var newCopy = copy.filter((item) => item.amount > 0);
                         newCopy.forEach((item) => {
                             if (item.name === "") {
                                 item.name = "Enter Item Name";
                             }
                         })
-                        setPantry(newCopy);
-                        setShowModal(true);
-                        navigation.navigate('List');
+                        navigation.navigate('Edit', { ...params, concat: newCopy });
                     }}>
                         <Text style={styles.submitText}>Submit</Text>
                     </Pressable>
@@ -185,6 +183,7 @@ export default function Edit({ navigation, route: { params } }) {
             </ScrollView>
     )
 }
+
 const styles = StyleSheet.create({
     scrollView: {
         flexDirection: 'column'

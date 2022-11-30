@@ -1,33 +1,16 @@
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; 
-import { useIsFocused } from '@react-navigation/native';
-import { useState, useEffect } from 'react';
-
-const Scan_Pantry = [
-    {
-        img: require('../../assets/pantry/cheddar.png'),
-        name: 'Shredded Cheddar',
-        unit_measure: 'Count',
-        amount: 2,
-    },
-    {
-        img: require('../../assets/pantry/milk.png'),
-        name: 'Skimmed Milk',
-        unit_measure: 'Count',
-        amount: 1,
-    },
-]
 
 export default function CamReview({ navigation, route: { params } }) {
-    const { uri } = params;
-    console.log(uri);
+    const { uri, ...rest } = params;
+
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Ionicons name='arrow-back' size={35} color='black' />
             </TouchableOpacity>
             <Image style={{ flex: 1, height: '30%',  width: '100%', resizeMode: 'contain', position: 'relative' }} source={{ uri: uri.uri }} />
-            <TouchableOpacity style={styles.reviewButton} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={styles.reviewButton} onPress={() => navigation.navigate('CamReviewList', rest)}>
                 <Text style={styles.reviewText}>Review</Text>
                 <MaterialCommunityIcons name='book' size={25} color='white' />
             </TouchableOpacity>

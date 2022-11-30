@@ -4,6 +4,7 @@ import List from './list';
 import Edit from './edit';
 import CamReview from './camera_review';
 import CameraScan from './camera';
+import CamReviewList from './camera_review_list';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ export default function Pantry() {
             <Stack.Screen name="Edit" component={Edit} />
             <Stack.Screen name="CameraScan" component={CameraScan} /> 
             <Stack.Screen name="CamReview" component={CamReview} />
+            <Stack.Screen name="CamReviewList" component={CamReviewList} />
                   
         </Stack.Navigator>
     )
