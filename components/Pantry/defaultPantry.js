@@ -24,10 +24,10 @@ const Pantry = [
         amount: 12,
     },
     {
-        img: require('../../assets/pantry/Img-4.png'),
-        name: 'Tomatoes',
+        img: require('../../assets/pantry/chicken_breast.png'),
+        name: 'Chicken Breast',
         unit_measure: 'count',
-        amount: 12,
+        amount: 8,
     }
 ]
 
