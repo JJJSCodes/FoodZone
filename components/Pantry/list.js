@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Alert, Pressable,
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import Header from '../Header'
 import defaultPantry from './defaultPantry';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useFonts, Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { Roboto_500Medium } from '@expo-google-fonts/roboto';
 
@@ -11,8 +11,8 @@ export default function List({ navigation, route: { params } }) {
         Inter_400Regular,
         Inter_500Medium,
         Roboto_500Medium,
-      });
-
+    });
+    
     const [pantry, setPantry] = useState([...defaultPantry]);
     const [showModal, setShowModal] = useState(false);
 
@@ -69,19 +69,21 @@ export default function List({ navigation, route: { params } }) {
 
     if (!fontsLoaded) return;
     return (
+        <>
+        <View style={{ flex: 0.3, maxHeight: 150 }}>
+            <Header heading={"Pantry"} subHeading={'Inventory'} back={() => navigation.navigate('Home')} />
+        </View>
         <ScrollView style={styles.scrollView}
-            ref={scrollViewRef}
-            onContentSizeChange={scrollViewRef.current?.scrollToEnd({ animated: true })}>
+            ref={scrollViewRef}>
             <Modal
                 animationType="slide"
                 transparent={true}
                 visible={showModal}
                 onRequestClose={() => {
-                  Alert.alert("Modal has been closed.");
                   setShowModal(!showModal);
                 }}
             >
-                <TouchableOpacity style={styles.centeredView} onPressOut={() => setShowModal(false)}>
+                <Pressable style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={{ ...styles.modalText, marginTop: 9, fontFamily: 'Inter_500Medium' }}>Pantry Updated Successfully!</Text>
                             {changes && appendedText && <View style={{ flexDirection: 'row', marginBottom: 32 }}>
@@ -100,25 +102,28 @@ export default function List({ navigation, route: { params } }) {
                                 </Pressable>
                             </View>
                         </View>
-                 </TouchableOpacity>
+                 </Pressable>
               </Modal>
-            <Header heading={"Pantry"} subHeading={'Inventory'} back={() => navigation.navigate('Home')} />
             <View style={{ flex: 2.5, marginHorizontal: 19, marginVertical: 24 }}>
-                {/* <Pressable style={styles.scrollButton} onPress={() => scrollViewRef.current?.scrollToEnd({animated: true})}>
-                    <Feather name="chevrons-down" size={40} color="white" />
-                </Pressable> */}
                 {items}
             </View>
-            <View style={{ justifyContent: 'center', alignItems: 'flex-end', marginBottom: 80 }}>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('Edit', { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
-                    <MaterialCommunityIcons name="pencil-circle" size={80} color="#F3752B" />
+        </ScrollView>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0.2, justifyContent: 'space-between' }}>
+                <Pressable style={{ ...styles.button, marginLeft: 50 }} onPress={() => navigation.navigate("CameraScan", { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
+                    <MaterialCommunityIcons name="camera-plus-outline" size={37} color="white" />
+                </Pressable>    
+                <Pressable style={{ ...styles.button, marginRight: 50 }} onPress={() => navigation.navigate('Edit', { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
+                    <MaterialCommunityIcons name="pencil" size={37} color="white" />
                 </Pressable>
             </View>
-        </ScrollView>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
+    scrollView: {
+        flex: 1,
+    },
     centeredView: {
         flex: 1,
         justifyContent: "center",
@@ -154,6 +159,22 @@ const styles = StyleSheet.create({
         height: 48,
         borderRadius: 10
     },
+    button: {
+        width: 60,
+        height: 60,
+        borderRadius: 66,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F3752B',
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
     pantryButtonText: {
         color: 'white',
         fontWeight: 'bold',
@@ -180,10 +201,6 @@ const styles = StyleSheet.create({
         top: -90,
         right: 0,
         position: 'absolute',
-    },
-    button: {
-        position: 'absolute',
-        right: 19,
     },
     count: {
         color: '#F3752B',

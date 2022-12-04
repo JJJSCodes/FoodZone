@@ -1,5 +1,5 @@
 import { Camera, CameraType } from 'expo-camera';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, SafeAreaView, TouchableOpacity, View, RecyclerViewBackedScrollView } from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons'; 
 import Header from '../Header';
@@ -9,18 +9,26 @@ export default function CameraScan({ navigation, route: { params } }) {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const ref = useRef();
 
+  useEffect(() => {
+    navigation.getParent()?.setOptions({ tabBarStyle: { display: "none" }});
+    return () => navigation.getParent()?.setOptions({ tabBarStyle: undefined });
+}, [navigation]);
+
+  useEffect(() => {
+    if (!permission?.granted) {
+      async () => {
+        const answer = await requestPermission();
+        console.log(answer);
+      }
+    }
+  }, [permission])
+
   if (!permission) {
     // Camera permissions are still loading
     return <View />;
   }
 
-
-  if (!permission.granted) {
-    return (
-      requestPermission()
-    );
-  }
-
+  if (!permission.granted) return;
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Alert, Image, TextInput, Pressable, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, Alert, Image, Modal, TextInput, Pressable, ScrollView } from 'react-native';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'; 
 import { useState } from 'react';
 import Header from '../Header';
@@ -22,8 +22,10 @@ const Scan_Pantry = [
 ]
 
 export default function CamReviewList({ navigation, route: { params } }) {
+    const { setPantry, pantry, setShowModal } = params;
     const [reviewList, setReviewList] = useState([...Scan_Pantry]);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(true);
+    const [changesModal, setChangesModal] = useState(false);
     let [fontsLoaded] = useFonts({
         Inter_400Regular,
         Roboto_500Medium,
@@ -65,20 +67,7 @@ export default function CamReviewList({ navigation, route: { params } }) {
             back();
             return;
         }
-        Alert.alert(
-            'Discard changes?',
-            'You have unsaved changes. Are you sure to discard them and leave the screen?',
-            [
-                { text: "Don't leave", style: 'cancel', onPress: () => { } },
-                {
-                    text: 'Discard',
-                    style: 'destructive',
-                    onPress: () => {
-                        back();
-                    },
-                },
-            ]
-        );
+        setChangesModal(true);
     }
 
     const items = reviewList.map((item, idx) => {
@@ -156,16 +145,45 @@ export default function CamReviewList({ navigation, route: { params } }) {
     if (!fontsLoaded) return;
 
     return (
-            <ScrollView style={styles.scrollView}>
+        <>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={changesModal}
+            >
+                <Pressable style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={{ ...styles.modalText, marginTop: 9, fontFamily: 'Inter_500Medium' }}>Warning</Text>
+                            <Text style={{ color: '#F3752B', fontSize: 20, fontFamily: 'Inter_400Regular', textAlign: 'center', marginBottom: 15 }}>You are about to lose all of your progress</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <Pressable style={styles.cancelButton} onPress={() => {
+                                    setChangesModal(false);
+                                }}>
+                                    <Text style={{ fontSize: 17, color: '#F3752B' }}>Cancel</Text>
+                                </Pressable>
+                                <Pressable style={styles.proceedButton} onPress={() => {
+                                    setChangesModal(false);
+                                    navigation.navigate('CameraScan');
+                                }}>
+                                    <Text style={{ fontSize: 17, color: 'white' }}>Proceed</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+                 </Pressable>
+              </Modal>
+            <View style={{ flex: 0.3, maxHeight: 150 }}>
             <Header heading={"Pantry"} subHeading={'Review Scanned Items'} back={() => check(() => navigation.navigate('CameraScan'))} />
-                <View style={{ flex: 2.5, margin: 19, alignItems: 'center' }}>
+            </View>
+            <ScrollView style={styles.scrollView}>
+                <View style={{ flex: 2.5, margin: 19, marginVertical: 24, alignItems: 'center' }}>
                     {items}
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 80}}>
+            </ScrollView>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0.2, justifyContent: 'space-between' }}>
                     <Pressable style={styles.addMore} onPress={() => addMore()}>
                         <Text style={styles.addMoreText}>Add More</Text>
                     </Pressable>
-                    <Pressable style={styles.submit} onPress={() => {
+                    <Pressable style={styles.save} onPress={() => {
                         var copy = [...reviewList];
                         var newCopy = copy.filter((item) => item.amount > 0);
                         newCopy.forEach((item) => {
@@ -173,17 +191,80 @@ export default function CamReviewList({ navigation, route: { params } }) {
                                 item.name = "Enter Item Name";
                             }
                         })
-                        navigation.navigate('Edit', { ...params, concat: newCopy });
+                        setPantry([...pantry].concat(newCopy));
+                        setShowModal(true);
+                        navigation.navigate('List', { newItems: newCopy.length, increase: true });
                     }}>
-                        <Text style={styles.submitText}>Save</Text>
+                        <Text style={styles.saveText}>Save</Text>
                     </Pressable>
                 </View>
-            </ScrollView>
+         </>
     )
 }
 
 const styles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+    },
+    modalView: {
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 29,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        alignItems: 'center',
+    },
+    modalText: {
+        marginBottom: 16,
+        fontSize: 20,
+        textAlign: "center",
+        color: '#201A25',
+    },
+    cancelButton: {
+        marginRight: 55,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: 'white',
+        width: 109,
+        height: 48,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#F3752B',
+    },
+    proceedButton: {
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: '#F3752B',
+        width: 109,
+        height: 48,
+        borderRadius: 10
+    },
     scrollView: {
+        flex: 1,
+        flexDirection: 'column'
+    },  
+    bottomBar: {
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    scrollView: {
+        flex: 1,
         flexDirection: 'column'
     },  
     addMoreText: {
@@ -202,17 +283,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 13,
         boxSizing: 'border-box',
-        marginRight: 44,
+        marginLeft: 44,
     },
-    submit: {
+    save: {
         backgroundColor: '#F3752B',
         width: 123,
         height: 48,
         borderRadius: 10,
+        marginRight: 44,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    submitText: {
+    saveText: {
         fontSize: 17,
         color: 'white',
         fontWeight: '600',

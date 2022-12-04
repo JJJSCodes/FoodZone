@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import List from './list';
 import Edit from './edit';
@@ -8,7 +8,13 @@ import CamReviewList from './camera_review_list';
 
 const Stack = createStackNavigator();
 
-export default function Pantry() {
+export default function Pantry({ navigation }) {
+    useEffect(() => {
+        if (navigation) {
+            navigation.setOptions({ tabBarStyle: { display: 'none' } })
+        }
+    });
+
     const screenOptionStyle = {
         headerShown: false,
     };
@@ -19,8 +25,7 @@ export default function Pantry() {
             <Stack.Screen name="Edit" component={Edit} />
             <Stack.Screen name="CameraScan" component={CameraScan} /> 
             <Stack.Screen name="CamReview" component={CamReview} />
-            <Stack.Screen name="CamReviewList" component={CamReviewList} />
-                  
+            <Stack.Screen name="CamReviewList" component={CamReviewList} />            
         </Stack.Navigator>
     )
 }
