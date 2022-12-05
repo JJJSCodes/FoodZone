@@ -5,7 +5,7 @@ export default function Home() {
     return (
         <View style={styles.screenContainer}>
             <ScrollView style={styles.scrollView}>
-                <Header heading='Good Morning' subHeading='Jasmine' isHome />
+                <Header heading='Good Morning' subHeading='Jasmine' />
                 <View style={styles.container}>
                     <Text style={styles.heading}>Today's Meals</Text>
                     <View style={styles.meal}>
@@ -56,7 +56,7 @@ export default function Home() {
     )
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     screenContainer: {
         flex: 1,
     },

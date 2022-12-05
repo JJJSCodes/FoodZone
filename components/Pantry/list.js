@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Alert, Pressable, Modal, Image } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from '../Header'
 import defaultPantry from './defaultPantry';
 import { useState, useRef, useEffect } from 'react';
@@ -12,7 +12,7 @@ export default function List({ navigation, route: { params } }) {
         Inter_500Medium,
         Roboto_500Medium,
     });
-    
+
     const [pantry, setPantry] = useState([...defaultPantry]);
     const [showModal, setShowModal] = useState(false);
 
@@ -30,20 +30,20 @@ export default function List({ navigation, route: { params } }) {
             case 'lbs':
                 return 'Weight (lbs)'
         }
-    } 
+    }
 
     const items = pantry.map((item, idx) => {
         if (!item) return;
         return (
             <View style={styles.item} key={idx}>
-                <View style={{ ...styles.left}}>
+                <View style={{ ...styles.left }}>
                     <Image
                         style={styles.img}
                         source={item.img}
                     />
                     <View style={{ marginHorizontal: 10 }}>
-                    <Text style={{ ...styles.name, fontFamily: 'Inter_400Regular' }}>{item.name}</Text>
-                    <Text style={{ ...styles.unit_measure, fontFamily: 'Inter_400Regular' }}>{unitType(item.unit_measure)}</Text>
+                        <Text style={{ ...styles.name, fontFamily: 'Inter_400Regular' }}>{item.name}</Text>
+                        <Text style={{ ...styles.unit_measure, fontFamily: 'Inter_400Regular' }}>{unitType(item.unit_measure)}</Text>
                     </View>
                 </View>
                 <View style={styles.right}>
@@ -70,27 +70,27 @@ export default function List({ navigation, route: { params } }) {
     if (!fontsLoaded) return;
     return (
         <>
-        <View style={{ flex: 0.3, maxHeight: 150 }}>
-            <Header heading={"Pantry"} subHeading={'Inventory'} back={() => navigation.navigate('Home')} />
-        </View>
-        <ScrollView style={styles.scrollView}
-            ref={scrollViewRef}>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={showModal}
-                onRequestClose={() => {
-                  setShowModal(!showModal);
-                }}
-            >
-                <Pressable style={styles.centeredView}>
+            <View style={{ flex: 0.3, maxHeight: 150 }}>
+                <Header heading={"Pantry"} subHeading={'Inventory'} back={() => navigation.navigate('Home')} />
+            </View>
+            <ScrollView style={styles.scrollView}
+                ref={scrollViewRef}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={showModal}
+                    onRequestClose={() => {
+                        setShowModal(!showModal);
+                    }}
+                >
+                    <Pressable style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={{ ...styles.modalText, marginTop: 9, fontFamily: 'Inter_500Medium' }}>Pantry Updated Successfully!</Text>
                             {changes && appendedText && <View style={{ flexDirection: 'row', marginBottom: 32 }}>
                                 <Text style={{ ...styles.count, fontSize: 20, fontFamily: 'Inter_400Regular', textAlign: 'center' }}>{changes}</Text>
-                                <Text style={{ ...styles.unit_measure, fontSize: 20, fontFamily: 'Inter_400Regular', textAlign: 'center'}}>{appendedText}</Text>
+                                <Text style={{ ...styles.unit_measure, fontSize: 20, fontFamily: 'Inter_400Regular', textAlign: 'center' }}>{appendedText}</Text>
                             </View>}
-                            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
                                 <Pressable style={styles.homeButton} onPress={() => {
                                     setShowModal(false);
                                     navigation.navigate('Home')
@@ -102,16 +102,16 @@ export default function List({ navigation, route: { params } }) {
                                 </Pressable>
                             </View>
                         </View>
-                 </Pressable>
-              </Modal>
-            <View style={{ flex: 2.5, marginHorizontal: 19, marginVertical: 24 }}>
-                {items}
-            </View>
-        </ScrollView>
+                    </Pressable>
+                </Modal>
+                <View style={{ flex: 2.5, marginHorizontal: 19, marginVertical: 24 }}>
+                    {items}
+                </View>
+            </ScrollView>
             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0.2, justifyContent: 'space-between' }}>
                 <Pressable style={{ ...styles.button, marginLeft: 50 }} onPress={() => navigation.navigate("CameraScan", { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
                     <MaterialCommunityIcons name="camera-plus-outline" size={37} color="white" />
-                </Pressable>    
+                </Pressable>
                 <Pressable style={{ ...styles.button, marginRight: 50 }} onPress={() => navigation.navigate('Edit', { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
                     <MaterialCommunityIcons name="pencil" size={37} color="white" />
                 </Pressable>
@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
@@ -168,8 +168,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F3752B',
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: 17
-    },  
+    },
     homeButton: {
         borderWidth: 1,
         maxWidth: 120,
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
         color: '#F3752B',
         fontWeight: 'bold',
         fontSize: 17
-    }, 
+    },
     scrollButton: {
         width: 40,
         top: -90,

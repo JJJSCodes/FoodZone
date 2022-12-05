@@ -1,16 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from './Home';
 import Pantry from './Pantry';
 import Schedule from './Schedule';
 import Profile from './Profile';
 import Learning from './Learning';
+import { useFonts, Poppins_500Medium } from '@expo-google-fonts/poppins';
 
 const Tab = createBottomTabNavigator();
 
 export default function Menu() {
+    let [fontsLoaded] = useFonts({
+        Poppins_500Medium,
+    });
+
+    if (!fontsLoaded) return;
+
     return (
         <NavigationContainer>
             <Tab.Navigator
@@ -19,6 +26,21 @@ export default function Menu() {
                     tabBarInactiveTintColor: styles.default,
                     tabBarLabelStyle: {
                         fontSize: 14,
+                        fontFamily: 'Poppins_500Medium',
+                    },
+                    tabBarStyle: {
+                        paddingHorizontal: 22,
+                        minHeight: 90,
+                        paddingTop: 5,
+                        backgroundColor: 'white',
+                        shadowColor: "rgba(32, 26, 37, 0.12)",
+                        shadowOffset: {
+                            width: 0,
+                            height: -1,
+                        },
+                        shadowOpacity: 1,
+                        shadowRadius: 3,
+                        elevation: 5,
                     },
                     headerShown: false,
                     tabBarIcon: ({ focused }) => {
@@ -34,31 +56,31 @@ export default function Menu() {
                             iconName = 'account-circle-outline';
                         } else if (route.name === 'Learning') {
                             iconName = 'school-outline';
-                        }    
+                        }
                         let color = focused ? styles.selected : styles.default;
 
-                        return <MaterialCommunityIcons name={iconName} size={28} color={color} />;
+                        return <MaterialCommunityIcons name={iconName} size={30} color={color} />;
                     }
-                    })}>
+                })}>
                 <Tab.Screen name="Home" component={Home} />
-                <Tab.Screen name="Pantry" component={Pantry}/>
+                <Tab.Screen name="Pantry" component={Pantry} />
                 <Tab.Screen name="Schedule" component={Schedule} />
                 <Tab.Screen name="Profile" component={Profile} listeners={{
                     tabPress: (e) => {
-                    e.preventDefault();
+                        e.preventDefault();
                     },
-                }}/>
+                }} />
                 <Tab.Screen name="Learning" component={Learning} listeners={{
                     tabPress: (e) => {
-                    e.preventDefault();
+                        e.preventDefault();
                     },
-                }}/>
+                }} />
             </Tab.Navigator>
         </NavigationContainer>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
     selected: '#F3752B',
-    default: '#999999',
+    default: '#7C7C7C',
 });
