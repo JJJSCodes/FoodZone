@@ -1,5 +1,7 @@
 import { Text, View, Image, StyleSheet, ScrollView, SafeAreaView, Pressable, navigation } from 'react-native';
 import Header from './Header';
+import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function Home() {
     return (
@@ -7,50 +9,49 @@ export default function Home() {
             <ScrollView style={styles.scrollView}>
                 <Header heading='Good Morning' subHeading='Jasmine' />
                 <View style={styles.container}>
-                    <Text style={styles.heading}>Today's Meals</Text>
+                    <Text style={styles.heading}>Current Meal</Text>
                     <View style={styles.meal}>
+                        <Text style={styles.subText}> Lunch </Text>
                         <Image
                             style={styles.dishImage}
-                            //source={{uri: 'https://images.pexels.com/photos/2955819/pexels-photo-2955819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'}}
-                            source={require('../assets/dishes/burrito.png')}
+                            source={require('../assets/dishes/lasagna.jpg')}
                         />
-                        <View style={{ marginHorizontal: 10 }}>
-                            <Text style={styles.screenTextdish}> Burrito </Text>
-                            <Text style={styles.textChef}> Jasmine, Luke </Text>
-                            <Text style={styles.boldText}> Breakfast </Text>
+                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                            <Text style={styles.screenTextdish}> Lasagna Bolognese </Text>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 10 }}>
+                                <AntDesign name="star" size={15} color="#FFCC00" />
+                                <Text style={{ fontSize: 13, fontWeight: "700" }}> 4.8</Text>
+                            </View>
+                        </View>
+                        <View style={{ flexDirection: "row" }}>
+                            <Text style={styles.textChefOranage}> Jasmine </Text>
+                            <Text style={styles.textChef}>, Mike </Text>
                         </View>
                     </View>
 
-                    <View style={styles.meal}>
-                        <Image
-                            style={styles.dishImage}
-                            source={require('../assets/dishes/lasagne.png')}
-                        />
-                        <View style={{ marginHorizontal: 10 }}>
-                            <Text style={styles.screenTextdish}> Lasagne Bolognese </Text>
-                            <Text style={styles.textChef}> Luke </Text>
-                            <Text style={styles.boldTextPink}> Lunch - Coming up </Text>
-                        </View>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 37 }}>
+                        <Pressable style={styles.cookButton} onPress={() => console.log('here')}>
+                            <Text style={styles.cookButtonText}>Start Cooking!</Text>
+                        </Pressable>
+
+                        <Pressable style={styles.availableButton} onPress={() => console.log('here')}>
+                            <Text style={styles.availableButtonText}>Edit Avalability</Text>
+                        </Pressable>
                     </View>
 
-                    <View style={styles.meal}>
+                    <Text style={styles.headingNext} >Up Next</Text>
+
+                    <View style={styles.mealNext}>
                         <Image
-                            style={styles.dishImage}
                             source={require('../assets/dishes/burger.png')}
                         />
-                        <View style={{ marginHorizontal: 10 }}>
-                            <Text style={styles.screenTextdish}> Vegan Burger </Text>
-                            <Text style={styles.textChef}> Stephanie, Jake </Text>
-                            <Text style={styles.boldText}> Dinner </Text>
+                        <View style = {{margin: 15}}>
+                            <Text style={{fontSize: 15, fontWeight:"600" }}> Vegan Burger </Text>
+                            <Text style={{fontSize: 13, color: "grey"}}> Stephanie, Jake </Text>
+                            <Text style={{fontSize: 13, fontWeight: '500', marginTop: 10}}> Dinner </Text>
                         </View>
                     </View>
                 </View>
-
-                {/* <Pressable onPress={navigation.navigate('Pantry') }> */}
-
-                <Pressable style={styles.cookButton} onPress={() => console.log('here')}>
-                    <Text style={styles.cookButtonText}>Cook Now</Text>
-                </Pressable>
             </ScrollView>
         </View>
     )
@@ -61,60 +62,97 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     container: {
-        alignItems: 'flex-start',
         margin: 20,
     },
+
     heading: {
         fontWeight: '700',
         fontSize: 20,
+        textAlign: "center",
+        textDecorationLine: 'underline'
     },
 
     dishImage: {
-        width: 100,
-        height: 100
+        width: 316,
+        height: 184
+    },
+
+    subText: {
+        fontSize: 16,
+        fontFamily: "Inter_400Regular",
+        color: "grey",
+        paddingBottom: 10
+    },
+
+    meal: {
+        // alignItems: 'center',
+        margin: 20,
+        justifyContent: "flex-start",
+        color: "blue"
     },
 
     screenTextdish: {
         fontSize: 17,
-        //margin: 5
-    },
-    textChef: {
-        fontSize: 15,
-        color: 'grey',
-        // margin: 5
-    },
-
-    boldText: {
-        fontWeight: 'bold',
+        fontWeight: "700",
         marginTop: 10
     },
 
-    boldTextPink: {
-        fontWeight: 'bold',
-        marginTop: 10,
-        color: '#F532F9'
+    textChef: {
+        fontSize: 15,
+        color: 'grey',
+        marginTop: 10
     },
 
-    meal: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 20
+    textChefOranage: {
+        fontSize: 15,
+        color: '#F3752B',
+        marginTop: 10
     },
+
 
     cookButton: {
-        left: '35%',
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#F3752B',
-        width: 124,
+        width: 180,
         height: 48,
         borderRadius: 10,
-        marginBottom: 100,
     },
 
     cookButtonText: {
         fontSize: 17,
         fontWeight: 'bold',
         color: 'white'
-    }
+    },
+
+    availableButton: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderColor: "#F3752B",
+        borderWidth: 2,
+        width: 180,
+        height: 48,
+        borderRadius: 10,
+    },
+
+    availableButtonText: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: "#F3752B"
+    },
+
+    headingNext: {
+        fontWeight: '700',
+        fontSize: 16,
+        textAlign: "center",
+        textDecorationLine: 'underline'
+
+    },
+
+    mealNext: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 30
+    },
+
 });
