@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import  selectMeal from './selectMeal';
 import Home from '../Home';
 
+
 const Stack = createStackNavigator();
 
 export default function Home({ navigation }) {
@@ -18,7 +19,7 @@ export default function Home({ navigation }) {
     };
     
     return (
-        <Stack.Navigator initialRouteName={"HomeScreen"} screenOptions={screenOptionStyle}>
+        <Stack.Navigator initialRouteName={"Home"} screenOptions={screenOptionStyle}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="selectMeal" component={selectMeal} />           
         </Stack.Navigator>

@@ -4,7 +4,7 @@ import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 import { AntDesign } from '@expo/vector-icons';
 import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
-export default function Home() {
+export default function Home({ navigation, route: { params } }) {
     return (
         <View style={styles.screenContainer}>
             <ScrollView style={styles.scrollView}>
@@ -13,6 +13,7 @@ export default function Home() {
                     <Text style={styles.heading}>Current Meal</Text>
                     <View style={styles.meal}>
                         <Text style={styles.subText}> Lunch </Text>
+                        <Pressable onPress={() => navigation.navigate('selectMeal')}>
                         <ImageBackground
                             style={styles.dishImage}
                             source={require('../assets/dishes/lasagna.jpg')}>
@@ -20,6 +21,7 @@ export default function Home() {
                             <Text style = {styles.time}>40 min</Text>
                             </View>
                         </ImageBackground>
+                        </Pressable>
 
 
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
