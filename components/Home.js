@@ -1,7 +1,8 @@
-import { Text, View, Image, StyleSheet, ScrollView, SafeAreaView, Pressable, navigation } from 'react-native';
+import { Text, View, Image, StyleSheet, ScrollView, SafeAreaView, Pressable, navigation, ImageBackground } from 'react-native';
 import Header from './Header';
 import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 import { AntDesign } from '@expo/vector-icons';
+import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 export default function Home() {
     return (
@@ -12,10 +13,15 @@ export default function Home() {
                     <Text style={styles.heading}>Current Meal</Text>
                     <View style={styles.meal}>
                         <Text style={styles.subText}> Lunch </Text>
-                        <Image
+                        <ImageBackground
                             style={styles.dishImage}
-                            source={require('../assets/dishes/lasagna.jpg')}
-                        />
+                            source={require('../assets/dishes/lasagna.jpg')}>
+                            <View style = {styles.timeBox}>
+                            <Text style = {styles.time}>40 min</Text>
+                            </View>
+                        </ImageBackground>
+
+
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                             <Text style={styles.screenTextdish}> Lasagna Bolognese </Text>
                             <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 10 }}>
@@ -45,10 +51,10 @@ export default function Home() {
                         <Image
                             source={require('../assets/dishes/burger.png')}
                         />
-                        <View style = {{margin: 15}}>
-                            <Text style={{fontSize: 15, fontWeight:"600" }}> Vegan Burger </Text>
-                            <Text style={{fontSize: 13, color: "grey"}}> Stephanie, Jake </Text>
-                            <Text style={{fontSize: 13, fontWeight: '500', marginTop: 10}}> Dinner </Text>
+                        <View style={{ margin: 15 }}>
+                            <Text style={{ fontSize: 15, fontWeight: "600" }}> Vegan Burger </Text>
+                            <Text style={{ fontSize: 13, color: "grey" }}> Stephanie, Jake </Text>
+                            <Text style={{ fontSize: 13, fontWeight: '500', marginTop: 10 }}> Dinner </Text>
                         </View>
                     </View>
                 </View>
@@ -74,7 +80,7 @@ const styles = StyleSheet.create({
 
     dishImage: {
         width: 316,
-        height: 184
+        height: 184,
     },
 
     subText: {
@@ -154,5 +160,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 30
     },
+
+    time: {
+        fontSize: 12,
+        fontWeight: "700",
+        padding: 3
+    },
+
+    timeBox: {
+        borderRadius: 800,
+        backgroundColor: "white",
+        height: 30,
+        width: 60,
+        position: "absolute",
+        bottom: 10,
+        left: 10
+    }
 
 });
