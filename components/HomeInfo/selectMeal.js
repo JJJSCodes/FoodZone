@@ -2,7 +2,7 @@ import { Text, View, Image, StyleSheet, ScrollView, SafeAreaView, Pressable, nav
 import Header from '../Header';
 
 
-export default function selectMeal() {
+export default function SelectMeal({ navigation, route: { params } }) {
     return (
 <Text>Select Meal</Text>
     )

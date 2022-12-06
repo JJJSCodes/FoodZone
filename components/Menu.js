@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Home from './Home';
+import HomeStack from './HomeInfo';
 import Pantry from './Pantry';
 import Schedule from './Schedule';
 import Profile from './Profile';
@@ -62,7 +62,7 @@ export default function Menu() {
                         return <MaterialCommunityIcons name={iconName} size={30} color={color} />;
                     }
                 })}>
-                <Tab.Screen name="Home" component={Home} />
+                <Tab.Screen name="HomeStack" component={HomeStack} />
                 <Tab.Screen name="Pantry" component={Pantry} />
                 <Tab.Screen name="Schedule" component={Schedule} />
                 <Tab.Screen name="Profile" component={Profile} listeners={{

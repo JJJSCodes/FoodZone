@@ -13,7 +13,7 @@ export default function Home({ navigation, route: { params } }) {
                     <Text style={styles.heading}>Current Meal</Text>
                     <View style={styles.meal}>
                         <Text style={styles.subText}> Lunch </Text>
-                        <Pressable onPress={() => navigation.navigate('selectMeal')}>
+                        <Pressable onPress={() => navigation.navigate('SelectMeal')}>
                         <ImageBackground
                             style={styles.dishImage}
                             source={require('../assets/dishes/lasagna.jpg')}>
@@ -22,7 +22,6 @@ export default function Home({ navigation, route: { params } }) {
                             </View>
                         </ImageBackground>
                         </Pressable>
-
 
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                             <Text style={styles.screenTextdish}> Lasagna Bolognese </Text>
@@ -38,11 +37,11 @@ export default function Home({ navigation, route: { params } }) {
                     </View>
 
                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 37 }}>
-                        <Pressable style={styles.cookButton} onPress={() => console.log('here')}>
+                        <Pressable style={styles.cookButton} onPress={() => navigation.navigate('SelectMeal')}>
                             <Text style={styles.cookButtonText}>Start Cooking!</Text>
                         </Pressable>
 
-                        <Pressable style={styles.availableButton} onPress={() => console.log('here')}>
+                        <Pressable style={styles.availableButton} onPress={() => navigation.navigate('Availability')}>
                             <Text style={styles.availableButtonText}>Edit Avalability</Text>
                         </Pressable>
                     </View>

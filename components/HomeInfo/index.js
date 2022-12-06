@@ -1,13 +1,13 @@
 import { Text, View, Image, StyleSheet, ScrollView, SafeAreaView, Pressable, navigation } from 'react-native';
-import Home from '../Home';
 import { createStackNavigator } from "@react-navigation/stack";
-import  selectMeal from './selectMeal';
+import  SelectMeal from './SelectMeal';
 import Home from '../Home';
-
+import Availability from './Availability';
+import { useEffect } from 'react';
 
 const Stack = createStackNavigator();
 
-export default function Home({ navigation }) {
+export default function HomeStack({ navigation }) {
     useEffect(() => {
         if (navigation) {
             navigation.setOptions({ tabBarStyle: { display: 'none' } })
@@ -21,7 +21,8 @@ export default function Home({ navigation }) {
     return (
         <Stack.Navigator initialRouteName={"Home"} screenOptions={screenOptionStyle}>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="selectMeal" component={selectMeal} />           
+            <Stack.Screen name="SelectMeal" component={SelectMeal} />    
+            <Stack.Screen name="Availability" component={Availability} />      
         </Stack.Navigator>
     )
 }
