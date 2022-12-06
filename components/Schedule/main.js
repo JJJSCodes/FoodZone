@@ -31,7 +31,7 @@ export default function Main({ navigation }) {
                 <View style={styles.cardAssigned}>
                     {
                         breakfast.assigned.map((assignee, idx) => {
-                            return <Text style={{ ...styles.assigneeName, fontFamily: breakfast.passed ? 'Poppins_200ExtraLight_Italic' : day.today ? 'Poppins_400Regular' : 'Poppins_300Light', color: assignee.isMe ? '#F3752B' : '#201A25' }}>{assignee.name}{idx !== breakfast.assigned.length - 1 && ', '}</Text>
+                            return <Text key={idx} style={{ ...styles.assigneeName, fontFamily: breakfast.passed ? 'Poppins_200ExtraLight_Italic' : day.today ? 'Poppins_400Regular' : 'Poppins_300Light', color: assignee.isMe ? '#F3752B' : '#201A25' }}>{assignee.name}{idx !== breakfast.assigned.length - 1 && ', '}</Text>
                         })
                     }
                 </View>
@@ -43,7 +43,7 @@ export default function Main({ navigation }) {
                 <View style={styles.cardAssigned}>
                     {
                         lunch.assigned.map((assignee, idx) => {
-                            return <Text style={{ ...styles.assigneeName, fontFamily: lunch.passed ? 'Poppins_200ExtraLight_Italic' : day.today ? 'Poppins_400Regular' : 'Poppins_300Light', color: assignee.isMe ? '#F3752B' : '#201A25' }}>{assignee.name}{idx !== lunch.assigned.length - 1 && ', '}</Text>
+                            return <Text key={idx} style={{ ...styles.assigneeName, fontFamily: lunch.passed ? 'Poppins_200ExtraLight_Italic' : day.today ? 'Poppins_400Regular' : 'Poppins_300Light', color: assignee.isMe ? '#F3752B' : '#201A25' }}>{assignee.name}{idx !== lunch.assigned.length - 1 && ', '}</Text>
                         })
                     }
                 </View>
@@ -55,7 +55,7 @@ export default function Main({ navigation }) {
                 <View style={styles.cardAssigned}>
                     {
                         dinner.assigned.map((assignee, idx) => {
-                            return <Text style={{ ...styles.assigneeName, fontFamily: dinner.passed ? 'Poppins_200ExtraLight_Italic' : day.today ? 'Poppins_400Regular' : 'Poppins_300Light', color: assignee.isMe ? '#F3752B' : '#201A25' }}>{assignee.name}{idx !== dinner.assigned.length - 1 && ', '}</Text>
+                            return <Text key={idx} style={{ ...styles.assigneeName, fontFamily: dinner.passed ? 'Poppins_200ExtraLight_Italic' : day.today ? 'Poppins_400Regular' : 'Poppins_300Light', color: assignee.isMe ? '#F3752B' : '#201A25' }}>{assignee.name}{idx !== dinner.assigned.length - 1 && ', '}</Text>
                         })
                     }
                 </View>
