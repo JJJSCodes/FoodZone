@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 export default function HomeStack({ navigation }) {
     useEffect(() => {
         if (navigation) {
-            navigation.setOptions({ tabBarStyle: { display: 'none' } })
+            navigation.setOptions({ tabBasrStyle: { display: 'none' } })
         }
     });
 

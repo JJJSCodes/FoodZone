@@ -29,18 +29,18 @@ export default function Menu() {
                         fontFamily: 'Poppins_500Medium',
                     },
                     tabBarStyle: {
-                        paddingHorizontal: 22,
-                        minHeight: 90,
-                        paddingTop: 5,
-                        backgroundColor: 'white',
-                        shadowColor: "rgba(32, 26, 37, 0.12)",
-                        shadowOffset: {
-                            width: 0,
-                            height: -1,
-                        },
-                        shadowOpacity: 1,
-                        shadowRadius: 3,
-                        elevation: 5,
+                        // paddingHorizontal: 22,
+                        // minHeight: 90,
+                        // paddingTop: 5,
+                        // backgroundColor: 'white',
+                        // shadowColor: "rgba(32, 26, 37, 0.12)",
+                        // shadowOffset: {
+                        //     width: 0,
+                        //     height: -1,
+                        // },
+                        // shadowOpacity: 1,
+                        // shadowRadius: 3,
+                        // elevation: 5,
                     },
                     headerShown: false,
                     tabBarIcon: ({ focused }) => {
@@ -62,7 +62,7 @@ export default function Menu() {
                         return <MaterialCommunityIcons name={iconName} size={30} color={color} />;
                     }
                 })}>
-                <Tab.Screen name="HomeStack" component={HomeStack} />
+                <Tab.Screen name="Home" component={HomeStack} />
                 <Tab.Screen name="Pantry" component={Pantry} />
                 <Tab.Screen name="Schedule" component={Schedule} />
                 <Tab.Screen name="Profile" component={Profile} listeners={{
