@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     cookButton: {
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: '#F3752B',
+        backgroundColor: '#E5956D',
         width: 180,
         height: 48,
         borderRadius: 10,
