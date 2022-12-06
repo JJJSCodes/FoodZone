@@ -5,7 +5,7 @@ export default [
             calendar_date: 'Dec 6th',
             meals: [
                 {
-                    name: 'Butter Milk Pancakes',
+                    name: 'Buttermilk Pancakes',
                     img: '',
                     assigned: [
                         {
@@ -37,6 +37,7 @@ export default [
                     ],
                     meal: 'Lunch',
                     long_date: 'Tuesday 6th December 2022',
+                    passed: true,
                 },
                 {
                     name: 'Vegan Burger',
@@ -53,6 +54,7 @@ export default [
                     ],
                     meal: 'Dinner',
                     long_date: 'Tuesday 6th December 2022',
+                    passed: true,
                 },
             ]
         },
@@ -71,6 +73,7 @@ export default [
                     ],
                     meal: 'Breakfast',
                     long_date: 'Wednesday 7th December 2022',
+                    passed: true,
                 },
                 {
                     name: 'Coconut Curry',
@@ -88,6 +91,7 @@ export default [
                     ],
                     meal: 'Lunch',
                     long_date: 'Wednesday 7th December 2022',
+                    passed: true,
                 },
                 {
                     name: 'Hawaiian Chicken Roll',
@@ -100,6 +104,7 @@ export default [
                     ],
                     meal: 'Dinner',
                     long_date: 'Wednesday 7th December 2022',
+                    passed: true,
                 },
             ]
         },
@@ -123,6 +128,7 @@ export default [
                     ],
                     meal: 'Breakfast',
                     long_date: 'Thursday 8th December 2022',
+                    passed: true,
                 },
                 {
                     name: 'Five Spice Chicken',
@@ -135,6 +141,7 @@ export default [
                     ],
                     meal: 'Lunch',
                     long_date: 'Thursday 8th December 2022',
+                    passed: true,
                 },
                 {
                     name: 'Pasta Bolognese',
@@ -148,6 +155,7 @@ export default [
                     ],
                     meal: 'Dinner',
                     long_date: 'Thursday 8th December 2022',
+                    passed: true,
                 },
             ]
         },
@@ -159,8 +167,8 @@ export default [
             calendar_date: 'Dec 9th',
             meals: [
                 {
-                    name: 'Butter Milk Pancakes',
-                    img: '',
+                    name: 'Buttermilk Pancakes',
+                    img: require('../../assets/dishes/pexels-ash-376464.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -177,7 +185,7 @@ export default [
                 },
                 {
                     name: 'Lasagne Bolognese',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-alleksana-5949888.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -189,6 +197,8 @@ export default [
                             skill: 'Advanced',
                         }
                     ],
+                    today: true,
+                    time: 40,
                     meal: 'Lunch',
                     long_date: 'Friday 9th December 2022',
                 },
@@ -312,7 +322,7 @@ export default [
             calendar_date: 'Dec 12th',
             meals: [
                 {
-                    name: 'Butter Milk Pancakes',
+                    name: 'Buttermilk Pancakes',
                     img: '',
                     assigned: [
                         {
