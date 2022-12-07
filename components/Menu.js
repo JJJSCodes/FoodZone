@@ -64,7 +64,7 @@ export default function Menu() {
                 })}>
                 <Tab.Screen name="Home" component={HomeStack} />
                 <Tab.Screen name="Pantry" component={Pantry} />
-                <Tab.Screen name="Schedule" component={Schedule} />
+                <Tab.Screen name="Schedule" component={Schedule} options={({ route }) => ({ tabBarVisible: false })} />
                 <Tab.Screen name="Profile" component={Profile} listeners={{
                     tabPress: (e) => {
                         e.preventDefault();

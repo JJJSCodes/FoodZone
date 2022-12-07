@@ -5,7 +5,15 @@ import { useFonts, Inter_400Regular, Inter_600SemiBold } from '@expo-google-font
 import { Poppins_200ExtraLight_Italic, Poppins_300Light, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import defaultSchedule from './defaultSchedule';
 
-export default function Main({ navigation }) {
+export default function Main({ navigation, route: { params } }) {
+    useEffect(() => {
+        if (!params) return;
+        const { meals, mealIdx } = params;
+        if (meals && mealIdx) {
+            navigation.navigate('Show', params)
+        }
+    }, [params])
+
     let [fontsLoaded] = useFonts({
         Inter_400Regular,
         Inter_600SemiBold,

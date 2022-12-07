@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, Image, Alert, TextInput, TouchableOpacity, Modal, ScrollView, Pressable } from 'react-native';
-import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import Header from '../Header';
 import { useState, useEffect, useRef } from 'react';
 import { EmptyItem } from './defaultPantry';
@@ -48,12 +48,12 @@ export default function Edit({ navigation, route: { params } }) {
 
     const addMore = () => {
         var copy = [...pantryCopy];
-        copy.push({...EmptyItem});
+        copy.push({ ...EmptyItem });
         setPantryCopy(copy);
         setHasUnsavedChanges(true);
         scrollViewRef.current?.scrollToEnd({ animated: true })
     }
-    
+
     const format = (amount) => {
         if (amount > 9) return amount.toString();
         return '0' + amount.toString();
@@ -65,7 +65,7 @@ export default function Edit({ navigation, route: { params } }) {
         var isWeight = item.unit_measure === 'lbs';
         var textRef;
         return (
-            <View key={idx}  style={{ ...styles.item } }>
+            <View key={idx} style={{ ...styles.item }}>
                 <View style={{ ...styles.left }}>
                     <Image
                         style={{ ...styles.img }}
@@ -103,13 +103,13 @@ export default function Edit({ navigation, route: { params } }) {
                             </Pressable>
                             <Text style={{ ...styles.unit_measure, textDecorationLine: 'none' }}> / </Text>
                             <Pressable
-                            onPress={() => {
-                                setHasUnsavedChanges(true);
-                                var copy = [...pantryCopy];
-                                copy[idx].unit_measure = 'lbs';
-                                setPantryCopy(copy);
-                            }}>
-                            <Text style={{ ...styles.unit_measure, fontWeight: isWeight ? 'bold' : 'normal' }}>Weight (lbs)</Text>
+                                onPress={() => {
+                                    setHasUnsavedChanges(true);
+                                    var copy = [...pantryCopy];
+                                    copy[idx].unit_measure = 'lbs';
+                                    setPantryCopy(copy);
+                                }}>
+                                <Text style={{ ...styles.unit_measure, fontWeight: isWeight ? 'bold' : 'normal' }}>Weight (lbs)</Text>
                             </Pressable>
                         </View>
                     </View>
@@ -134,7 +134,7 @@ export default function Edit({ navigation, route: { params } }) {
                         {format(item.amount)}
                     </TextInput>
                     <Pressable style={styles.amountButtonRight} onPress={() => add(idx)}>
-                        <AntDesign name="plus" size={18} color= "black" />
+                        <AntDesign name="plus" size={18} color="black" />
                     </Pressable>
                 </View>
             </View>
@@ -151,25 +151,25 @@ export default function Edit({ navigation, route: { params } }) {
                 visible={changesModal}
             >
                 <Pressable style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={{ ...styles.modalText, marginTop: 9, fontFamily: 'Inter_500Medium' }}>Warning</Text>
-                            <Text style={{ color: '#F3752B', fontSize: 20, fontFamily: 'Inter_400Regular', textAlign: 'center', marginBottom: 15 }}>You are about to lose all of your progress</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Pressable style={styles.cancelButton} onPress={() => {
-                                    setChangesModal(false);
-                                }}>
-                                    <Text style={{ fontSize: 17, color: '#F3752B' }}>Cancel</Text>
-                                </Pressable>
-                                <Pressable style={styles.proceedButton} onPress={() => {
-                                    setChangesModal(false);
-                                    navigation.goBack();
-                                }}>
-                                    <Text style={{ fontSize: 17, color: 'white' }}>Proceed</Text>
-                                </Pressable>
-                            </View>
+                    <View style={styles.modalView}>
+                        <Text style={{ ...styles.modalText, marginTop: 9, fontFamily: 'Inter_500Medium' }}>Warning</Text>
+                        <Text style={{ color: '#F3752B', fontSize: 20, fontFamily: 'Inter_400Regular', textAlign: 'center', marginBottom: 15 }}>You are about to lose all of your progress</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Pressable style={styles.cancelButton} onPress={() => {
+                                setChangesModal(false);
+                            }}>
+                                <Text style={{ fontSize: 17, color: '#F3752B' }}>Cancel</Text>
+                            </Pressable>
+                            <Pressable style={styles.proceedButton} onPress={() => {
+                                setChangesModal(false);
+                                navigation.goBack();
+                            }}>
+                                <Text style={{ fontSize: 17, color: 'white' }}>Proceed</Text>
+                            </Pressable>
                         </View>
-                 </Pressable>
-              </Modal>
+                    </View>
+                </Pressable>
+            </Modal>
             <View style={{ flex: 0.3, maxHeight: 150 }}>
                 <Header heading={"Pantry"} subHeading={'Update Items'} back={() => check(() => navigation.navigate('List'))} />
             </View>
@@ -182,24 +182,24 @@ export default function Edit({ navigation, route: { params } }) {
                 </View>
             </ScrollView>
             <View style={{ flex: 0.2, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', ...styles.bottomBar }}>
-                        <Pressable style={styles.addMore} onPress={() => addMore()}>
-                            <Text style={styles.addMoreText}>Add More</Text>
-                        </Pressable>
-                        <Pressable style={styles.submit} onPress={() => {
-                            var copy = [...pantryCopy];
-                            var newCopy = copy.filter((item) => item.amount > 0);
-                            newCopy.forEach((item) => {
-                                if (item.name === "") {
-                                    item.name = "Enter Item Name";
-                                }
-                            })
-                            setPantry(newCopy);
-                            setShowModal(true);
-                            navigation.navigate('List', { newItems: newCopy.length - pantry.length, increase: newCopy.length > pantry.length });
-                        }}>
-                            <Text style={styles.submitText}>Save</Text>
-                        </Pressable>
-                </View>
+                <Pressable style={styles.addMore} onPress={() => addMore()}>
+                    <Text style={styles.addMoreText}>Add More</Text>
+                </Pressable>
+                <Pressable style={styles.submit} onPress={() => {
+                    var copy = [...pantryCopy];
+                    var newCopy = copy.filter((item) => item.amount > 0);
+                    newCopy.forEach((item) => {
+                        if (item.name === "") {
+                            item.name = "Enter Item Name";
+                        }
+                    })
+                    setPantry(newCopy);
+                    setShowModal(true);
+                    navigation.navigate('List', { newItems: newCopy.length - pantry.length, increase: newCopy.length > pantry.length });
+                }}>
+                    <Text style={styles.submitText}>Save</Text>
+                </Pressable>
+            </View>
         </>
     )
 }
@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
@@ -253,17 +253,17 @@ const styles = StyleSheet.create({
     scrollView: {
         flex: 1,
         flexDirection: 'column'
-    },  
-    bottomBar: {
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
     },
+    // bottomBar: {
+    //     shadowColor: "#000",
+    //     shadowOffset: {
+    //         width: 0,
+    //         height: 2
+    //     },
+    //     shadowOpacity: 0.25,
+    //     shadowRadius: 3.84,
+    //     elevation: 5,
+    // },
     addMoreText: {
         color: '#F3752B',
         fontSize: 17,
@@ -273,18 +273,18 @@ const styles = StyleSheet.create({
         marginLeft: 44,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
+        borderWidth: 2,
         width: 120,
         height: 48,
         borderColor: '#F3752B',
         borderRadius: 10,
         paddingHorizontal: 20,
         paddingVertical: 13,
-        // boxSizing: 'border-box',
+        // backgroundColor: 'white',
         // shadowColor: "#000",
         // shadowOffset: {
-        //   width: 0,
-        //   height: 2
+        //     width: 0,
+        //     height: 2
         // },
         // shadowOpacity: 0.25,
         // shadowRadius: 3.84,
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 8,
         backgroundColor: '#C3C6C9',
-    },  
+    },
     item: {
         flex: 1,
         flexDirection: 'row',

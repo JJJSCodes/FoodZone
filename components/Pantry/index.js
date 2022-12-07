@@ -13,19 +13,19 @@ export default function Pantry({ navigation }) {
         if (navigation) {
             navigation.setOptions({ tabBarStyle: { display: 'none' } })
         }
-    });
+    }, [navigation]);
 
     const screenOptionStyle = {
         headerShown: false,
     };
-    
+
     return (
         <Stack.Navigator initialRouteName={"List"} screenOptions={screenOptionStyle}>
             <Stack.Screen name="List" component={List} />
             <Stack.Screen name="Edit" component={Edit} />
-            <Stack.Screen name="CameraScan" component={CameraScan} /> 
+            <Stack.Screen name="CameraScan" component={CameraScan} />
             <Stack.Screen name="CamReview" component={CamReview} />
-            <Stack.Screen name="CamReviewList" component={CamReviewList} />            
+            <Stack.Screen name="CamReviewList" component={CamReviewList} />
         </Stack.Navigator>
     )
 }

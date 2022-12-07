@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     },
     time: {
         fontFamily: 'Inter_700Bold',
+        fontSize: 12,
         paddingVertical: 4,
         paddingHorizontal: 8,
     },

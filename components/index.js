@@ -1,5 +1,5 @@
 import Menu from './Menu';
-import Home from './Home';
+import Home from './HomeInfo';
 import Schedule from './Schedule';
 import Pantry from './Pantry';
 import Learning from './Learning';

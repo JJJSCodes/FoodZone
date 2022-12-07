@@ -1,18 +1,13 @@
 import { Camera, CameraType } from 'expo-camera';
 import { useState, useRef, useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, SafeAreaView, TouchableOpacity, View, RecyclerViewBackedScrollView } from 'react-native';
-import { Ionicons, Entypo } from '@expo/vector-icons'; 
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import Header from '../Header';
 
 export default function CameraScan({ navigation, route: { params } }) {
   const [loading, setLoading] = useState(false);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const ref = useRef();
-
-  useEffect(() => {
-    navigation.getParent()?.setOptions({ tabBarStyle: { display: "none" }});
-    return () => navigation.getParent()?.setOptions({ tabBarStyle: undefined });
-}, [navigation]);
 
   useEffect(() => {
     if (!permission?.granted) {
@@ -48,12 +43,12 @@ export default function CameraScan({ navigation, route: { params } }) {
               resolve();
             })
           }}>
-            <View style={{ width: 65, height: 65, borderWidth: 1, borderColor: 'black', borderRadius: 65/2 }} />
+            <View style={{ width: 65, height: 65, borderWidth: 1, borderColor: 'black', borderRadius: 65 / 2 }} />
           </TouchableOpacity>}
         </View>
       </Camera>
       {loading && <ActivityIndicator style={{ position: 'absolute', alignSelf: 'center' }} size="large" color="black" />}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('List')}>
         <Ionicons name='arrow-back' size={35} color='white' />
       </TouchableOpacity>
     </View>

@@ -4,7 +4,7 @@ import ScheduleHeader from './scheduleHeader';
 import { MaterialCommunityIcons, AntDesign, SimpleLineIcons } from '@expo/vector-icons';
 import { useState, useRef, useEffect } from 'react';
 import { useFonts, Inter_700Bold, Inter_400Regular } from '@expo-google-fonts/inter';
-import { Poppins_600SemiBold, Poppins_400Regular } from '@expo-google-fonts/poppins';
+import { Poppins_600SemiBold, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { Avatar } from 'react-native-paper';
 import Intructions from './intruction';
 
@@ -191,18 +191,7 @@ export default function Cook({ navigation, route: { params } }) {
                     </View>
                 </View>
                 <View style={{ display: tab === 'intructions' ? 'flex' : 'none', marginLeft: 14, marginRight: 33, marginVertical: 25 }}>
-                    {/* <FlatList
-                        style={{ marginHorizontal: 25, display: fullIntruction ? 'flex' : 'none' }}
-                        data={intructions}
-                        renderItem={renderMyIntructions}
-                        keyExtractor={item => item.id}
-                    />
-                    <FlatList
-                        style={{ marginHorizontal: 25, display: fullIntruction ? 'none' : 'flex' }}
-                        data={intructions}
-                        renderItem={renderMyIntructions}
-                        keyExtractor={item => item.id}
-                    /> */}
+                    <Text style={{ alignSelf: 'center', color: styles.orange, fontFamily: 'Poppins_700Bold', fontSize: 16, marginBottom: 20, textDecorationLine: 'underline', fontWeight: 'bold' }}>{fullIntruction ? 'Full Recipe' : 'My Intructions'}</Text>
                     <FlatList
                         nestedScrollEnabled
                         style={{ marginHorizontal: 25 }}
