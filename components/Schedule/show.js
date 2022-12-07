@@ -61,8 +61,8 @@ export default function Show({ navigation, route: { params } }) {
         setHeartSelected(true);
     }
 
-    const renderItem = ({ item, idx }) => (
-        <View key={idx}>
+    const renderItem = ({ item, index }) => (
+        <View key={index}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 24, paddingVertical: 16 }}>
                 <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 17, color: item.name === "Jasmine" ? '#F3752B' : 'black' }}>{item.name}</Text>
                 <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 17, color: '#8E8E93' }}>{item.skill}</Text>
@@ -76,20 +76,6 @@ export default function Show({ navigation, route: { params } }) {
             <View style={{ flex: 0.4, maxHeight: 150 }}>
                 <Header heading={meal.meal} subHeading={meal.long_date} back={() => navigation.goBack()} />
             </View>
-            {/* <View style={styles.menuTopBar}>
-                <Pressable onPress={() => navigation.navigate('Show', { ...params, mealIdx: 0 })}>
-                    <Text style={{ ...styles.menuText, borderColor: styles.orange, borderBottomWidth: 1, color: mealIdx == 0 ? styles.orange : styles.default }}>Breakfast</Text>
-                    {mealIdx == 0 && <View style={{ bottom: -10, borderColor: styles.orange, borderWidth: 1 }} />}
-                </Pressable>
-                <Pressable onPress={() => navigation.navigate('Show', { ...params, mealIdx: 1 })}>
-                    <Text style={{ ...styles.menuText, color: mealIdx == 1 ? styles.orange : styles.default }}>Lunch</Text>
-                    {mealIdx == 1 && <View style={{ bottom: -10, borderColor: styles.orange, borderWidth: 1 }} />}
-                </Pressable>
-                <Pressable onPress={() => navigation.navigate('Show', { ...params, mealIdx: 2 })}>
-                    <Text style={{ ...styles.menuText, color: mealIdx == 2 ? styles.orange : styles.default }}>Dinner</Text>
-                    {mealIdx == 2 && <View style={{ bottom: -10, borderColor: styles.orange, borderWidth: 1 }} />}
-                </Pressable>
-            </View> */}
             <View style={{ flex: 0.5, alignItems: 'center', marginTop: 50 }}>
                 <ImageBackground
                     style={styles.dishImage}
@@ -118,7 +104,7 @@ export default function Show({ navigation, route: { params } }) {
                         </>
                     )}
                 </ImageBackground>
-                <View style={{ flex: 1, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+                <View style={{ marginTop: 8, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
                     <Text style={{ fontFamily: 'Inter_700Bold', fontSize: 17, flex: 1 }}>{meal.name}</Text>
                     <View style={{ flexDirection: 'row', flex: 0.5, justifyContent: 'flex-end' }}>
                         <AntDesign name="star" size={15} color="#FFCC00" />
@@ -135,7 +121,7 @@ export default function Show({ navigation, route: { params } }) {
                     keyExtractor={item => item.id}
                 />
             </View>
-            <View style={{ flex: 0.2, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flex: 0.4, alignItems: 'center', justifyContent: 'center' }}>
                 <Pressable disabled={!meal.today} style={{ backgroundColor: meal.today ? '#F3752B' : '#8E8E93', borderRadius: 10 }} onPress={() => navigation.navigate('Cook')}>
                     <Text style={{ color: 'white', fontSize: 17, fontFamily: 'Poppins_600SemiBold', paddingHorizontal: 20, paddingVertical: 11 }}>Cook This!</Text>
                 </Pressable>

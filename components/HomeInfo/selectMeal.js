@@ -4,6 +4,6 @@ import Header from '../Header';
 
 export default function SelectMeal({ navigation, route: { params } }) {
     return (
-<Text>Select Meal</Text>
+        <Text>Select Meal</Text>
     )
 }
