@@ -6,7 +6,7 @@ export default [
             meals: [
                 {
                     name: 'Buttermilk Pancakes',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-ash-376464.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -23,7 +23,7 @@ export default [
                 },
                 {
                     name: 'Lasagne Bolognese',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-alleksana-5949888.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -41,7 +41,7 @@ export default [
                 },
                 {
                     name: 'Vegan Burger',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-valeria-boltneva-1199960.jpg'),
                     assigned: [
                         {
                             name: 'Stephanie',
@@ -64,7 +64,7 @@ export default [
             meals: [
                 {
                     name: 'Bacon and Eggs',
-                    img: '',
+                    img: require('../../assets/dishes/air-fryer-bacon-1-4.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -95,7 +95,7 @@ export default [
                 },
                 {
                     name: 'Hawaiian Chicken Roll',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-pixabay-461198.jpg'),
                     assigned: [
                         {
                             name: 'Stephanie',
@@ -204,7 +204,7 @@ export default [
                 },
                 {
                     name: 'Vegan Burger',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-valeria-boltneva-1199960.jpg'),
                     assigned: [
                         {
                             name: 'Stephanie',
@@ -226,7 +226,7 @@ export default [
             meals: [
                 {
                     name: 'Bacon and Eggs',
-                    img: '',
+                    img: require('../../assets/dishes/air-fryer-bacon-1-4.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -255,7 +255,7 @@ export default [
                 },
                 {
                     name: 'Hawaiian Chicken Roll',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-pixabay-461198.jpg'),
                     assigned: [
                         {
                             name: 'Stephanie',
@@ -323,7 +323,7 @@ export default [
             meals: [
                 {
                     name: 'Buttermilk Pancakes',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-ash-376464.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -335,12 +335,11 @@ export default [
                         }
                     ],
                     meal: 'Breakfast',
-                    passed: true,
                     long_date: 'Monday 12th December 2022',
                 },
                 {
                     name: 'Lasagne Bolognese',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-alleksana-5949888.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -357,7 +356,7 @@ export default [
                 },
                 {
                     name: 'Vegan Burger',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-valeria-boltneva-1199960.jpg'),
                     assigned: [
                         {
                             name: 'Stephanie',
@@ -379,7 +378,7 @@ export default [
             meals: [
                 {
                     name: 'Bacon and Eggs',
-                    img: '',
+                    img: require('../../assets/dishes/air-fryer-bacon-1-4.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -408,7 +407,7 @@ export default [
                 },
                 {
                     name: 'Hawaiian Chicken Roll',
-                    img: '',
+                    img: require('../../assets/dishes/pexels-pixabay-461198.jpg'),
                     assigned: [
                         {
                             name: 'Stephanie',

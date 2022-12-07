@@ -109,7 +109,7 @@ export default function List({ navigation, route: { params } }) {
                 </View>
             </ScrollView>
             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0.2, justifyContent: 'space-between' }}>
-                <Pressable style={{ ...styles.button, marginLeft: 50 }} onPress={() => navigation.navigate("CameraScan", { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
+                <Pressable style={{ ...styles.button, marginLeft: 50, paddingRight: 2 }} onPress={() => navigation.navigate("CameraScan", { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
                     <MaterialCommunityIcons name="camera-plus-outline" size={37} color="white" />
                 </Pressable>
                 <Pressable style={{ ...styles.button, marginRight: 50 }} onPress={() => navigation.navigate('Edit', { pantry: pantry, setPantry: (items) => setPantry(items), setShowModal: (bool) => setShowModal(bool) })}>
