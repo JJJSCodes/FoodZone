@@ -1,10 +1,10 @@
 import { Text, View, Image, StyleSheet, ScrollView, SafeAreaView, Pressable, navigation, ImageBackground } from 'react-native';
-import Header from './Header';
+import Header from '../Header';
 import { useFonts, Inter_400Regular } from '@expo-google-fonts/inter';
 import { AntDesign } from '@expo/vector-icons';
 import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
-export default function Home({ navigation, route: { params } }) {
+export default function FinalHome({ navigation, route: { params } }) {
     return (
         <View style={styles.screenContainer}>
             <ScrollView style={styles.scrollView}>
@@ -13,16 +13,13 @@ export default function Home({ navigation, route: { params } }) {
                     <Text style={styles.heading}>Current Meal</Text>
                     <View style={styles.meal}>
                         <Text style={styles.subText}> Dinner </Text>
-                        <Pressable onPress={() => navigation.navigate('SelectMeal')}>
                         <ImageBackground
                             style={styles.dishImage}
-                            source={require('../assets/dishes/burger_big.png')}>
+                            source={require('../../assets/dishes/burger_big.png')}>
                             <View style = {styles.timeBox}>
                             <Text style = {styles.time}>35 min</Text>
                             </View>
                         </ImageBackground>
-                        </Pressable>
-
 
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                             <Text style={styles.screenTextdish}> Vegan Burger </Text>
@@ -50,7 +47,7 @@ export default function Home({ navigation, route: { params } }) {
 
                     <View style={styles.mealNext}>
                         <Image
-                            source={require('../assets/dishes/baccon.png')}
+                            source={require('../../assets/dishes/baccon.png')}
                         />
                         <View style={{ margin: 15 }}>
                             <Text style={{ fontSize: 15, fontWeight: "600" }}> Bacon and Egg </Text>

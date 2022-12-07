@@ -13,7 +13,6 @@ export default function Home({ navigation, route: { params } }) {
                     <Text style={styles.heading}>Current Meal</Text>
                     <View style={styles.meal}>
                         <Text style={styles.subText}> Lunch </Text>
-                        <Pressable onPress={() => navigation.navigate('SelectMeal')}>
                         <ImageBackground
                             style={styles.dishImage}
                             source={require('../assets/dishes/lasagna.jpg')}>
@@ -21,7 +20,6 @@ export default function Home({ navigation, route: { params } }) {
                             <Text style = {styles.time}>40 min</Text>
                             </View>
                         </ImageBackground>
-                        </Pressable>
 
                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                             <Text style={styles.screenTextdish}> Lasagna Bolognese </Text>
@@ -37,7 +35,7 @@ export default function Home({ navigation, route: { params } }) {
                     </View>
 
                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 37 }}>
-                        <Pressable style={styles.cookButton} onPress={() => navigation.navigate('SelectMeal')}>
+                        <Pressable style={styles.cookButton} onPress={() => navigation.navigate('Show')}>
                             <Text style={styles.cookButtonText}>Start Cooking!</Text>
                         </Pressable>
 
