@@ -18,14 +18,19 @@ export default function Home({ navigation, currMealIdx, setCurrMealIdx }) {
         {
             meals: Meals[1][0].meals,
             mealIdx: 1,
+            person1: 'Jasmine',
+            person2: 'Mike',
         },
         {
             meals: Meals[1][0].meals,
             mealIdx: 2,
+            person1: 'Stephanie',
+            person2: 'Jake',
         },
         {
             meals: Meals[1][1].meals,
             mealIdx: 0,
+            person1: 'Mike',
         }
     ];
 
@@ -67,8 +72,8 @@ export default function Home({ navigation, currMealIdx, setCurrMealIdx }) {
                             </View>
                         </View>
                         <View style={{ flexDirection: "row", alignSelf: 'center', width: 300, top: -5, alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <Text style={styles.textChefOranage}>Jasmine</Text>
-                            <Text style={styles.textChef}>, Mike </Text>
+                            <Text style={{ ...styles.textChefOranage, color: today.assigned.find((assignee) => assignee.name === 'Jasmine') ? '#F3752B' : '#7C7C7C' }}>{todaysMeals[currMealIdx].person1}</Text>
+                            <Text style={styles.textChef}>, {todaysMeals[currMealIdx].person2}</Text>
                         </View>
                     </View>
 
@@ -91,8 +96,13 @@ export default function Home({ navigation, currMealIdx, setCurrMealIdx }) {
                             source={next.img}
                         />
                         <Pressable style={{ marginHorizontal: 15 }} onPress={() => navigation.navigate('Schedule', { screen: 'Main', params: { ...todaysMeals[currMealIdx + 1] } })}>
-                            <Text style={{ flex: 0.5, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>{next.name}</Text>
-                            <Text style={{ flex: 0.5, fontSize: 13, color: "grey", fontFamily: 'Inter_400Regular' }}> Stephanie, Jake </Text>
+                            <Text style={{ flex: 0.1, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>{next.name}</Text>
+                            <View style={{ flexDirection: 'row', flex: 0.4 }}>
+                                <Text style={{ fontSize: 13, color: "#7C7C7C", fontFamily: 'Inter_400Regular' }}>{todaysMeals[currMealIdx + 1].person1}</Text>
+                                {todaysMeals[currMealIdx + 1].person2 && (
+                                    <Text style={{ fontSize: 13, color: "#7C7C7C", fontFamily: 'Inter_400Regular' }}>, {todaysMeals[currMealIdx + 1].person2}</Text>
+                                )}
+                            </View>
                             <Text style={{ flex: 0.1, fontSize: 13, fontFamily: 'Inter_500Medium' }}>{next.meal}</Text>
                         </Pressable>
                     </View>
@@ -132,7 +142,7 @@ const styles = StyleSheet.create({
         top: -25,
         fontSize: 16,
         fontFamily: "Inter_700Bold",
-        color: "grey",
+        color: "#7C7C7C",
         paddingBottom: 10
     },
     timeBox: {
@@ -163,14 +173,13 @@ const styles = StyleSheet.create({
 
     textChef: {
         fontSize: 15,
-        color: 'grey',
+        color: '#7C7C7C',
         marginTop: 10
     },
 
     textChefOranage: {
         fontSize: 15,
-        color: '#F3752B',
-        marginTop: 10
+        marginTop: 10,
     },
 
 

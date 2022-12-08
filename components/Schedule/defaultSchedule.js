@@ -193,7 +193,7 @@ export default [
                             isMe: true,
                         },
                         {
-                            name: 'Luke',
+                            name: 'Mike',
                             skill: 'Advanced',
                         }
                     ],
