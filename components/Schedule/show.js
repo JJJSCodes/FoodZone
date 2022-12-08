@@ -38,7 +38,6 @@ export default function Show({ navigation, route: { params } }) {
         Poppins_600SemiBold
     });
     const { meals, mealIdx } = params;
-    // const meal = meals[mealIdx];
     const [meal, setMeal] = useState(meals[mealIdx]);
     const [selectIdx, setSelection] = useState(0);
     const [heartSelected, setHeartSelected] = useState(true);
@@ -61,15 +60,17 @@ export default function Show({ navigation, route: { params } }) {
         setHeartSelected(true);
     }
 
-    const renderItem = ({ item, index }) => (
-        <View key={index}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 24, paddingVertical: 16 }}>
-                <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 17, color: item.name === "Jasmine" ? '#F3752B' : 'black' }}>{item.name}</Text>
-                <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 17, color: '#8E8E93' }}>{item.skill}</Text>
+    const renderItem = ({ item, index }) => {
+        return (
+            <View key={index}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 24, paddingVertical: 16 }}>
+                    <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 17, color: item.name === "Jasmine" ? '#F3752B' : 'black' }}>{item.name}</Text>
+                    <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 17, color: '#8E8E93' }}>{item.skill}</Text>
+                </View>
+                <View style={{ borderBottomWidth: 1, borderBottomColor: '#F2F2F7' }} />
             </View>
-            <View style={{ borderBottomWidth: 1, borderBottomColor: '#F2F2F7' }} />
-        </View>
-    )
+        )
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>

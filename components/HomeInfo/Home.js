@@ -1,12 +1,12 @@
 import { Text, View, Image, StyleSheet, ScrollView, SafeAreaView, Pressable, navigation, ImageBackground } from 'react-native';
 import Header from '../Header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFonts, Inter_400Regular, Inter_700Bold, Inter_600SemiBold, Inter_500Medium } from '@expo-google-fonts/inter';
 import { Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import Meals from '../Schedule/defaultSchedule';
 
-export default function Home({ navigation, route: { params } }) {
+export default function Home({ navigation, currMealIdx, setCurrMealIdx }) {
     let [fontsLoaded] = useFonts({
         Inter_500Medium,
         Inter_600SemiBold,
@@ -14,10 +14,27 @@ export default function Home({ navigation, route: { params } }) {
         Inter_400Regular,
         Poppins_700Bold,
     });
+    const todaysMeals = [
+        {
+            meals: Meals[1][0].meals,
+            mealIdx: 1,
+        },
+        {
+            meals: Meals[1][0].meals,
+            mealIdx: 2,
+        },
+        {
+            meals: Meals[1][1].meals,
+            mealIdx: 0,
+        }
+    ];
 
     const [heartSelected, setHeartSelected] = useState(true);
 
     if (!fontsLoaded) return;
+
+    var today = todaysMeals[currMealIdx].meals[todaysMeals[currMealIdx].mealIdx];
+    var next = todaysMeals[currMealIdx + 1].meals[todaysMeals[currMealIdx + 1].mealIdx];
 
     return (
         <View style={styles.screenContainer}>
@@ -26,14 +43,14 @@ export default function Home({ navigation, route: { params } }) {
                 <View style={styles.container}>
                     <Text style={styles.heading}>Current Meal</Text>
                     <View style={styles.meal}>
-                        <Pressable onPress={() => navigation.navigate('Schedule', { screen: 'Main', params: { meals: Meals[1][0].meals, mealIdx: 1 } })}>
+                        <Pressable onPress={() => navigation.navigate('Schedule', { screen: 'Main', params: { ...todaysMeals[currMealIdx] } })}>
                             <ImageBackground
                                 style={styles.dishImage}
                                 imageStyle={{ borderRadius: 16 }}
-                                source={require('../../assets/dishes/lasagna.jpg')}>
-                                <Text style={styles.subText}> Lunch </Text>
+                                source={today.img}>
+                                <Text style={styles.subText}>{today.meal}</Text>
                                 <View style={styles.timeBox}>
-                                    <Text style={styles.time}>40 min</Text>
+                                    <Text style={styles.time}>{today.time} min</Text>
                                 </View>
                                 <View style={styles.heartButton}>
                                     <Pressable style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: 'rgba(255, 255, 255, 0.1)', alignItems: 'center', justifyContent: 'center' }} onPress={() => setHeartSelected(!heartSelected)}>
@@ -43,7 +60,7 @@ export default function Home({ navigation, route: { params } }) {
                             </ImageBackground>
                         </Pressable>
                         <View style={{ alignSelf: 'center', marginTop: 8, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={{ fontFamily: 'Inter_700Bold', fontSize: 17, flex: 1 }}>Lasagna Bolognese </Text>
+                            <Text style={{ fontFamily: 'Inter_700Bold', fontSize: 17, flex: 1 }}>{today.name}</Text>
                             <View style={{ flexDirection: 'row', flex: 0.5, justifyContent: 'flex-end' }}>
                                 <AntDesign name="star" size={15} color="#FFCC00" />
                                 <Text style={{ fontSize: 13, fontWeight: "700", marginLeft: 2 }}> 4.8</Text>
@@ -56,7 +73,7 @@ export default function Home({ navigation, route: { params } }) {
                     </View>
 
                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 37 }}>
-                        <Pressable style={styles.cookButton} onPress={() => navigation.navigate('Schedule', { screen: 'Main', params: { meals: Meals[1][0].meals, mealIdx: 1 } })}>
+                        <Pressable style={styles.cookButton} onPress={() => navigation.navigate('Schedule', { screen: 'Main', params: { ...todaysMeals[currMealIdx] } })}>
                             <Text style={styles.cookButtonText}>Start Cooking!</Text>
                         </Pressable>
 
@@ -66,16 +83,20 @@ export default function Home({ navigation, route: { params } }) {
                     </View>
 
                     <Text style={styles.headingNext} >Up Next</Text>
+                    <View style={{ borderBottomWidth: 1, marginTop: 9, width: '100%', borderBottomColor: '#F2F2F7' }} />
                     <View style={styles.mealNext}>
-                        <Image
-                            source={require('../../assets/dishes/burger.png')}
+                        <ImageBackground
+                            style={{ width: 100, height: 100 }}
+                            imageStyle={{ borderRadius: 16 }}
+                            source={next.img}
                         />
-                        <Pressable style={{ margin: 15 }} onPress={() => navigation.navigate('Schedule', { screen: 'Main', params: { meals: Meals[1][0].meals, mealIdx: 2 } })}>
-                            <Text style={{ flex: 0.5, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}> Vegan Burger </Text>
+                        <Pressable style={{ marginHorizontal: 15 }} onPress={() => navigation.navigate('Schedule', { screen: 'Main', params: { ...todaysMeals[currMealIdx + 1] } })}>
+                            <Text style={{ flex: 0.5, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>{next.name}</Text>
                             <Text style={{ flex: 0.5, fontSize: 13, color: "grey", fontFamily: 'Inter_400Regular' }}> Stephanie, Jake </Text>
-                            <Text style={{ flex: 0.1, fontSize: 13, fontFamily: 'Inter_500Medium' }}> Dinner </Text>
+                            <Text style={{ flex: 0.1, fontSize: 13, fontFamily: 'Inter_500Medium' }}>{next.meal}</Text>
                         </Pressable>
                     </View>
+                    <View style={{ borderBottomWidth: 1, width: '100%', borderBottomColor: '#F2F2F7' }} />
                 </View>
             </ScrollView>
         </View>
@@ -86,6 +107,7 @@ const styles = StyleSheet.create({
     default: '#8E8E93',
     screenContainer: {
         flex: 1,
+        backgroundColor: 'white',
     },
     container: {
         margin: 20,

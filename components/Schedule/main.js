@@ -8,8 +8,11 @@ import defaultSchedule from './defaultSchedule';
 export default function Main({ navigation, route: { params } }) {
     useEffect(() => {
         if (!params) return;
-        const { meals, mealIdx } = params;
-        if (meals && mealIdx) {
+        const { meals, goHome = false } = params;
+        if (goHome) {
+            navigation.navigate('Home')
+        }
+        if (meals) {
             navigation.navigate('Show', params)
         }
     }, [params])

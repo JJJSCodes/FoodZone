@@ -8,6 +8,7 @@ import Schedule from './Schedule';
 import Profile from './Profile';
 import Learning from './Learning';
 import { useFonts, Poppins_500Medium } from '@expo-google-fonts/poppins';
+import { useState } from 'react';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,6 +16,8 @@ export default function Menu() {
     let [fontsLoaded] = useFonts({
         Poppins_500Medium,
     });
+
+    const [currMealIdx, setCurrMealIdx] = useState(0);
 
     if (!fontsLoaded) return;
 
@@ -41,6 +44,7 @@ export default function Menu() {
                         shadowOpacity: 1,
                         shadowRadius: 3,
                         elevation: 5,
+                        borderRadius: 20,
                     },
                     headerShown: false,
                     tabBarIcon: ({ focused }) => {
@@ -62,9 +66,9 @@ export default function Menu() {
                         return <MaterialCommunityIcons name={iconName} size={30} color={color} />;
                     }
                 })}>
-                <Tab.Screen name="Home" component={HomeStack} />
+                <Tab.Screen name="Home" children={({ navigation }) => <HomeStack navigation={navigation} currMealIdx={currMealIdx} setCurrMealIdx={setCurrMealIdx} />} />
                 <Tab.Screen name="Pantry" component={Pantry} />
-                <Tab.Screen name="Schedule" component={Schedule} options={({ route }) => ({ tabBarVisible: false })} />
+                <Tab.Screen name="Schedule" children={({ navigation }) => <Schedule navigation={navigation} currMealIdx={currMealIdx} setCurrMealIdx={setCurrMealIdx} />} options={({ route }) => ({ tabBarVisible: false })} />
                 <Tab.Screen name="Profile" component={Profile} listeners={{
                     tabPress: (e) => {
                         e.preventDefault();

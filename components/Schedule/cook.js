@@ -7,10 +7,10 @@ import { useFonts, Inter_700Bold, Inter_400Regular } from '@expo-google-fonts/in
 import { Poppins_600SemiBold, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { Avatar } from 'react-native-paper';
 import Intructions from './intruction';
-import FinalHome from './FinalHome';
+import Meals from '../Schedule/defaultSchedule';
 
 
-export default function Cook({ navigation, route: { params } }) {
+export default function Cook({ navigation, setCurrMealIdx }) {
     let [fontsLoaded] = useFonts({
         Inter_700Bold,
         Inter_400Regular,
@@ -80,7 +80,10 @@ export default function Cook({ navigation, route: { params } }) {
                         <Text style={{ ...styles.modalText, marginTop: 9, fontFamily: 'Inter_500Medium' }}>Cooking Complete!</Text>
                         <Pressable style={styles.proceedButton} onPress={() => {
                             setChangesModal(false);
-                            navigation.navigate('FinalHome');
+                            setCurrMealIdx(1);
+                            Meals[1][0].meals[1].passed = true;
+                            Meals[1][0].meals[1].today = false;
+                            navigation.navigate('Main', { goHome: true });
                         }}>
                             <Text style={{ fontSize: 17, color: 'white' }}>Go Home</Text>
                         </Pressable>

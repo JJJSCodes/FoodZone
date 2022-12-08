@@ -10,16 +10,15 @@ export default function CameraScan({ navigation, route: { params } }) {
   const ref = useRef();
 
   useEffect(() => {
-    if (!permission?.granted) {
-      async () => {
-        const answer = await requestPermission();
-        console.log(answer);
-      }
+    if (permission && !permission.granted) {
+      // async () => {
+      //   const answer = await requestPermission();
+      // }
+      requestPermission();
     }
   }, [permission])
 
   if (!permission) {
-    // Camera permissions are still loading
     return <View />;
   }
 

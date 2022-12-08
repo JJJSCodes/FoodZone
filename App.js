@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import { Menu } from './components';
 
+
 export default function App() {
+  LogBox.ignoreAllLogs();
   return (
-      <Menu />
+    <Menu />
   );
 }
 

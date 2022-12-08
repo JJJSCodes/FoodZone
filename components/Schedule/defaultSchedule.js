@@ -77,7 +77,7 @@ export default [
                 },
                 {
                     name: 'Coconut Curry',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0874.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -114,7 +114,7 @@ export default [
             meals: [
                 {
                     name: 'Steel Cut Oatmeal',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0875.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -132,7 +132,7 @@ export default [
                 },
                 {
                     name: 'Five Spice Chicken',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0876.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -145,7 +145,7 @@ export default [
                 },
                 {
                     name: 'Pasta Bolognese',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0877.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -197,6 +197,7 @@ export default [
                             skill: 'Advanced',
                         }
                     ],
+                    passed: false,
                     today: true,
                     time: 40,
                     meal: 'Lunch',
@@ -216,6 +217,7 @@ export default [
                         }
                     ],
                     meal: 'Dinner',
+                    time: 40,
                     long_date: 'Friday 9th December 2022',
                 },
             ]
@@ -238,7 +240,7 @@ export default [
                 },
                 {
                     name: 'Coconut Curry',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0874.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -273,7 +275,7 @@ export default [
             meals: [
                 {
                     name: 'Steel Cut Oatmeal',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0875.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -290,7 +292,7 @@ export default [
                 },
                 {
                     name: 'Five Spice Chicken',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0876.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -302,7 +304,7 @@ export default [
                 },
                 {
                     name: 'Pasta Bolognese',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0877.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -390,7 +392,7 @@ export default [
                 },
                 {
                     name: 'Coconut Curry',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0874.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -425,7 +427,7 @@ export default [
             meals: [
                 {
                     name: 'Steel Cut Oatmeal',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0875.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
@@ -442,7 +444,7 @@ export default [
                 },
                 {
                     name: 'Five Spice Chicken',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0876.jpg'),
                     assigned: [
                         {
                             name: 'Mike',
@@ -454,7 +456,7 @@ export default [
                 },
                 {
                     name: 'Pasta Bolognese',
-                    img: '',
+                    img: require('../../assets/dishes/IMG_0877.jpg'),
                     assigned: [
                         {
                             name: 'Jasmine',
