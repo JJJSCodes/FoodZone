@@ -96,10 +96,10 @@ export default function Show({ navigation, route: { params } }) {
                     </View>
                     {meal.today && (
                         <>
-                            {selectIdx >= 1 && <Pressable style={{ position: 'absolute', left: -40, bottom: '40%' }} onPress={() => decrement()}>
+                            {selectIdx >= 1 && <Pressable style={{ position: 'absolute', left: -35, bottom: '40%' }} onPress={() => decrement()}>
                                 <SimpleLineIcons name="arrow-left-circle" size={32} />
                             </Pressable>}
-                            {selectIdx <= 2 && <Pressable style={{ position: 'absolute', right: -40, bottom: '40%' }} onPress={() => increment()}>
+                            {selectIdx <= 2 && <Pressable style={{ position: 'absolute', right: -35, bottom: '40%' }} onPress={() => increment()}>
                                 <SimpleLineIcons name="arrow-right-circle" size={32} />
                             </Pressable>}
                         </>

@@ -76,8 +76,8 @@ export default function Home({ navigation, currMealIdx, setCurrMealIdx }) {
                             <Text style={styles.textChef}>, {todaysMeals[currMealIdx].person2}</Text>
                         </View>
                     </View>
-
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 37 }}>
+                    {/* <View style={{ borderBottomWidth: 1, borderBottomColor: '#F2F2F7', width: '100%' }} /> */}
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 10, marginBottom: 30 }}>
                         <Pressable style={styles.cookButton} onPress={() => navigation.navigate('Schedule', { screen: 'Main', params: { ...todaysMeals[currMealIdx] } })}>
                             <Text style={styles.cookButtonText}>Start Cooking!</Text>
                         </Pressable>
@@ -187,8 +187,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#F3752B',
-        width: 180,
+        // width: 180,
+        flex: 1,
         height: 48,
+        marginRight: 30,
         borderRadius: 10,
     },
 
@@ -203,7 +205,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderColor: "#F3752B",
         borderWidth: 2,
-        width: 180,
+        flex: 1,
+        // width: 180,
         height: 48,
         borderRadius: 10,
     },
